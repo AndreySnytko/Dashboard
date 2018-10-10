@@ -1,0 +1,59 @@
+Погода:
+    gismeteo API - стал платным, либо нужно размещать баннер на сайте.
+    https://www.gismeteo.ru/api/#По%20географическому%20объекту
+
+    Можно получить здесь и распарсить
+    https://yandex.ru/pogoda/65
+
+
+    https://www.gismeteo.ru/weather-moscow-4368/
+    https://www.gismeteo.ru/weather-novosibirsk-4690/now/
+
+    Новосибисрк:
+    <span class="js_value tab-weather__value_l">+7<span class="tab-weather__value_m">,9</span></span>
+    https://www.gismeteo.ru/weather-novosibirsk-4690/tomorrow/
+
+    Москва:
+      <span class="js_value tab-weather__value_l">+11<span class="tab-weather__value_m">,2</span></span>
+
+
+    Есть API у openweathermap.org
+    https://openweathermap.org/current
+    https://openweathermap.org/users/sign_in
+    Не даёт зарегистрироваться. Вроде как тоже стали платными.
+
+
+Курсы валют ЦБ:
+    http://www.cbr.ru/scripts/XML_daily.asp
+
+    Возвращает в XML, формат вида:
+    <ValCurs Date="10.10.2018" name="Foreign Currency Market">
+     <Valute ID="R01235">
+      <NumCode>840</NumCode>
+      <CharCode>USD</CharCode>
+      <Nominal>1</Nominal>
+      <Name>Доллар США</Name>
+      <Value>66,4032</Value>
+    </Valute>
+    <Valute ID="R01239">
+     <NumCode>978</NumCode>
+     <CharCode>EUR</CharCode>
+     <Nominal>1</Nominal>
+     <Name>Евро</Name>
+     <Value>76,2110</Value>
+    </Valute>
+   </ValCurs>
+
+
+Стили:
+    Файл styles.css
+    Для label например:
+    .v-label {
+    	color: blue;
+    	font-size: 1em;
+    }
+    Попробовать:
+    yourTextBox.addStyleName("inline-label");
+    .v-caption-inline-label{
+    display: inline-block;
+    }

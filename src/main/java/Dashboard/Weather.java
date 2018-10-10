@@ -4,16 +4,21 @@ import java.util.ArrayList;
 
 public class Weather implements Info{
 
+    private String name="Погода";
     private String city;
     private ArrayList<String> cities;
     private float currentTemp;
     private float tomorrowTemp;
+
 
     //TODO: добавить конструктор с URLом
     public Weather() {
       getData();
     }
 
+    public String getName(){
+        return this.name;
+    }
 
     public void getData(){
         this.city="Новосибирск";
@@ -34,5 +39,7 @@ public class Weather implements Info{
 
         return values;
     }
+
+
 }
 

@@ -22,48 +22,28 @@ public class DashboardUI extends UI {
     protected void init(VaadinRequest vaadinRequest) {
         final HorizontalLayout horizontalLayout=new HorizontalLayout(); //Главное окно в которое будем помещать наши дашборды
 
-        //Квадратный дашбоэрд
-        final VerticalLayout verticalLayout = new VerticalLayout();
-        final TextField name = new TextField();
-        name.setCaption("Type your name here:");
-        Button button = new Button("Click Me");
-        button.addClickListener(e -> {
-            verticalLayout.addComponent(new Label("Thanks " + name.getValue()
-                    + ", it works!"));
-        });
-        verticalLayout.addComponents(name, button);
 
+        // Создаём окно погоды
+        Window weatherWindow = (new SquareDashboard(new Weather())).drawWindow();
+        //Размещаем панель погоды в главном окне
+        weatherWindow.setPosition(10,10); //TODO: Отслеживать позицию других окон и размещать новое окно относительно уже добавленных
+        addWindow(weatherWindow);
 
-        // Рисуем панель погоды
-        Weather weather=new Weather();
-        SquareDashboard weatherDashboard=new SquareDashboard(weather);
-        final VerticalLayout weatherLayout = weatherDashboard.drawWindow();
+        // Создаём окно курса валюты
+        Currency currency=new Currency();
+        SquareDashboard currencyDashboard=new SquareDashboard(currency);
+        Window currencyWindow = currencyDashboard.drawWindow();
+        //Размещаем панель курса валют в главном окне
+        currencyWindow.setPosition(270,10);
+        addWindow(currencyWindow);
 
-        //Рисуем окно в которое помещаем погоду
-        Window subWindow=new Window("Погода");
-        subWindow.setContent(weatherLayout);
-        subWindow.setHeight("250px");
-        subWindow.setWidth("250px");
-        subWindow.setPosition(10,10);
-        subWindow.setClosable(false);
-        addWindow(subWindow);
-
-        //Тестовое окно
-        Window subWindow2=new Window("Vertical");
-        subWindow2.setContent(verticalLayout);
-        subWindow2.setHeight("250px");
-        subWindow2.setWidth("250px");
-        subWindow2.setPosition(270,10);
-        subWindow2.setClosable(false);
-        addWindow(subWindow2);
-
-
-        // Собираем панели в единый дашбоэрд
-//        horizontalLayout.addComponent(subWindow);
-//        horizontalLayout.addComponent(weatherLayout);
-//        horizontalLayout.addComponent(subWindow);
-
-//        setContent(horizontalLayout);
+        // Создаём окно посещений
+        Visitors visitors=new Visitors();
+        SquareDashboard visitorsDashboard=new SquareDashboard(visitors);
+        Window visitorsWindow = visitorsDashboard.drawWindow();
+        //Размещаем панель посещений в главном окне
+        visitorsWindow.setPosition(530,10);
+        addWindow(visitorsWindow);
     }
 
     @WebServlet(urlPatterns = "/*", name = "DashboardServlet", asyncSupported = true)

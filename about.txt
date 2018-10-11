@@ -5,22 +5,31 @@
     Можно получить здесь и распарсить
     https://yandex.ru/pogoda/65
 
-
-    https://www.gismeteo.ru/weather-moscow-4368/
     https://www.gismeteo.ru/weather-novosibirsk-4690/now/
-
     Новосибисрк:
+    https://www.gismeteo.ru/weather-novosibirsk-4690/now/
     <span class="js_value tab-weather__value_l">+7<span class="tab-weather__value_m">,9</span></span>
-    https://www.gismeteo.ru/weather-novosibirsk-4690/tomorrow/
-
-    Москва:
-      <span class="js_value tab-weather__value_l">+11<span class="tab-weather__value_m">,2</span></span>
-
+    Для прогноза на завтра сложно парсить, большой объём.
 
     Есть API у openweathermap.org
     https://openweathermap.org/current
     https://openweathermap.org/users/sign_in
-    Не даёт зарегистрироваться. Вроде как тоже стали платными.
+    Вроде как тоже стали платными.
+
+    Yahoo API:
+    https://developer.yahoo.com/weather/?guccounter=1
+    https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22nome%2C%20ak%22)&format=xml&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys
+
+    APIXU - нужно регистрироваться и генерить ключ. До 5000 запросов в месяц.
+    https://www.apixu.com
+
+        Прогноз на 2 дня:
+        JSON:
+            http://api.apixu.com/v1/forecast.json?key=dec6a405f5914a8bbe070116181110&q=Novosibirsk&days=2
+            http://api.apixu.com/v1/forecast.json?key=dec6a405f5914a8bbe070116181110&q=Moscow&days=2
+            http://api.apixu.com/v1/forecast.json?key=dec6a405f5914a8bbe070116181110&q=Saint%20Petersburg&days=2
+        XML:
+            http://api.apixu.com/v1/forecast.xml?key=dec6a405f5914a8bbe070116181110&q=Novosibirsk&days=2
 
 
 Курсы валют ЦБ:

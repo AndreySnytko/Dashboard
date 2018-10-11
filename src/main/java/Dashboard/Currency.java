@@ -31,9 +31,16 @@ public class Currency implements Info{
         String usd = xml.getFirstXmlElement("/ValCurs/Valute[@ID=\"R01235\"]", "Value");
         String eur = xml.getFirstXmlElement("/ValCurs/Valute[@ID=\"R01239\"]", "Value");
 
-        //TODO: Обернуть в try/catch, может возникнуть ситуация когда не сможет распарсить строку в float
-        this.usd= Float.parseFloat(usd.replace(',','.'));
-        this.eur= Float.parseFloat(eur.replace(',','.'));
+
+        try {
+            this.usd = Float.parseFloat(usd.replace(',', '.'));
+            this.eur = Float.parseFloat(eur.replace(',', '.'));
+        }catch(NumberFormatException e){
+            this.usd=(float) 0.0;
+            this.eur=(float) 0.0;
+            //TODO: Добавить логирование
+        }
+
     }
 
     public ArrayList<String> getComboList(){

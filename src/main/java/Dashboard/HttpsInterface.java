@@ -32,6 +32,8 @@ public class HttpsInterface
         try
         {
             URL httpurl = new URL(this.url);
+
+
             HttpURLConnection httpConnection = (HttpURLConnection) httpurl.openConnection();
 
             httpConnection.setRequestMethod("POST");
@@ -42,14 +44,15 @@ public class HttpsInterface
             OutputStream outStream = httpConnection.getOutputStream();
             OutputStreamWriter outStreamWriter = new OutputStreamWriter(outStream, "UTF-8");
 
+
             outStreamWriter.write(responseXml);
             outStreamWriter.flush();
             outStreamWriter.close();
             outStream.close();
 
             //TODO: Добавить логирование ответов от сервера.
-            //            System.out.println("ResponseCode:"+httpConnection.getResponseCode());
-            //            System.out.println("ResponseMessage:"+httpConnection.getResponseMessage());
+            //System.out.println("ResponseCode:"+httpConnection.getResponseCode());
+            //  System.out.println("ResponseMessage:"+httpConnection.getResponseMessage());
 
             BufferedReader in = new BufferedReader(new InputStreamReader(httpConnection.getInputStream()));
             String inputLine;
@@ -59,7 +62,6 @@ public class HttpsInterface
                 responseXml=responseXml+inputLine;
             }
             in.close();
-            //System.out.println("responseXml:"+responseXml);
 
         }
         catch (SocketTimeoutException se)

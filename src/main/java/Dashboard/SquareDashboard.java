@@ -27,20 +27,30 @@ public class SquareDashboard extends Window {
         DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
         //Прорисовываем окна в зависимости от того какой объект получили
-        if(object instanceof Weather) {
+        if(object instanceof Weather) { //Погода
             ComboBox boxCities = new ComboBox("", object.getComboList());
-            boxCities.setValue(object.getComboList().get(0)); //TODO: убрать возможность выбора null
+            boxCities.setValue(object.getComboList().get(0));
+            boxCities.setEmptySelectionAllowed(false);
 
             //В случае нажатия кнопки обновляем данные и меняем значение лейблов
+            //TODO: использовать один метод для 2х листенеров
             button.addClickListener(e -> {
                 String city=boxCities.getValue().toString();
-                verticalLayout.addComponent(new Label(city));
-                ((Weather) object).getData();
+                ((Weather) object).getData(city);
+                label1.setValue(decimalFormat.format(object.getValues().get(0)));
+                label2.setValue(decimalFormat.format(object.getValues().get(1)));
+            });
+
+            //В случае изменения значения comboBox
+            boxCities.addValueChangeListener(event -> {
+                String city=boxCities.getValue().toString();
+                ((Weather) object).getData(city);
+                label1.setValue(decimalFormat.format(object.getValues().get(0)));
+                label2.setValue(decimalFormat.format(object.getValues().get(1)));
             });
 
             boxCities.setSizeFull();
             verticalLayout.addComponents(boxCities);
-
 
             label1.setCaption("Температура текущая:"); //TODO: Вынести названия в класс Weather
             label2.setCaption("Прогноз на завтра:");
@@ -54,7 +64,7 @@ public class SquareDashboard extends Window {
             verticalLayout.addComponents(label2);
             verticalLayout.addComponents(button);
 
-        }else if(object instanceof Currency){
+        }else if(object instanceof Currency){ //Курс валют
 
 
             label1.setCaption("USD:"); //TODO: Вынести названия в класс Currency
@@ -65,14 +75,15 @@ public class SquareDashboard extends Window {
             verticalLayout.addComponents(label1);
             verticalLayout.addComponents(label2);
             verticalLayout.addComponents(button);
-        }else{
+
+        }else{ // Счетчик посещений
 
             label1.setValue(decimalFormat.format(object.getValues().get(0)));
             verticalLayout.addComponents(label1);
         }
 
         subWindow.setContent(verticalLayout);
-        subWindow.setHeight("250px");
+        subWindow.setHeight("350px");
         subWindow.setWidth("250px");
         subWindow.setClosable(false);
         subWindow.setDraggable(false);

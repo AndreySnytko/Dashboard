@@ -1,16 +1,21 @@
 package Dashboard;
 
 import java.util.ArrayList;
+import java.util.Properties;
 
 public class Visitors implements Info{
 
     private String name="Счетчик посещений";
-
     private float count;
+    private Properties properties;
 
 
     public Visitors() {
-      getData();
+      this.count=1;
+    }
+    public Visitors(Properties properties) {
+        this.properties=properties;
+        getData();
     }
 
     public String getName(){
@@ -18,7 +23,7 @@ public class Visitors implements Info{
     }
 
     public void getData(){
-        this.count=1;
+
     }
 
     public ArrayList<String> getComboList(){

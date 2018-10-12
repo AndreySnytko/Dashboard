@@ -8,6 +8,8 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
 
+import java.util.Properties;
+
 import static java.security.AccessController.getContext;
 
 /**
@@ -20,10 +22,14 @@ import static java.security.AccessController.getContext;
 @Theme("mytheme")
 public class DashboardUI extends UI {
 
+    Properties properties;
+
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-        final HorizontalLayout horizontalLayout=new HorizontalLayout(); //Главное окно в которое будем помещать наши дашборды
 
+        properties=config();//Вычитываем конфиг
+
+        //final HorizontalLayout horizontalLayout=new HorizontalLayout(); //Главное окно в которое будем помещать наши дашборды
 
         //TODO: Менять расположение и размер окон в зависимости от разрешения браузера
         //System.out.println("Width: "+UI.getCurrent().getPage().getBrowserWindowWidth());
@@ -45,7 +51,7 @@ public class DashboardUI extends UI {
         addWindow(currencyWindow);
 
         // Создаём окно посещений
-        Visitors visitors=new Visitors();
+        Visitors visitors=new Visitors(properties);
         SquareDashboard visitorsDashboard=new SquareDashboard(visitors);
         Window visitorsWindow = visitorsDashboard.drawWindow();
         //Размещаем панель посещений в главном окне
@@ -56,5 +62,19 @@ public class DashboardUI extends UI {
     @WebServlet(urlPatterns = "/*", name = "DashboardServlet", asyncSupported = true)
     @VaadinServletConfiguration(ui = DashboardUI.class, productionMode = false)
     public static class DashboardServlet extends VaadinServlet {
+    }
+
+    public Properties config(){
+        //TODO: добавить чтение конфига из файла
+        Properties prop = new Properties();
+        prop.setProperty("host", "localhost");
+        prop.setProperty("port", "27017");
+        prop.setProperty("dbname", "admin");
+        prop.setProperty("login", "root");
+        prop.setProperty("password", "root");
+        prop.setProperty("table", "visitors");
+        //TODO: Добавить чтение URLов для погоды и валюты из файла.
+
+        return prop;
     }
 }

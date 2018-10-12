@@ -13,6 +13,7 @@ public class Visitors implements Info{
     public Visitors() {
       this.count=1;
     }
+
     public Visitors(Properties properties) {
         this.properties=properties;
         getData();
@@ -23,6 +24,11 @@ public class Visitors implements Info{
     }
 
     public void getData(){
+        Mongo mongo;
+        mongo = new Mongo(properties);
+        mongo.update();
+        count=mongo.getCounterValue();
+        mongo.close();
 
     }
 

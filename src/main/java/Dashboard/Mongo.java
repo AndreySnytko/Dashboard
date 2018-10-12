@@ -27,26 +27,61 @@ public class Mongo {
             // Выбираем коллекцию/таблицу для дальнейшей работы
             table = db.getCollection(prop.getProperty("table"));
 
-            System.out.println("Connected");
-
         } catch (UnknownHostException e) {
-
-            System.err.println("Don't connect!");
+            //TODO:логирования ошибки подключения к базе
         }
     }
-
-    public void addValue(){
-
-    }
-
-    public void getValue(){
-
-    }
-
 
     public void close(){
         mongoClient.close();
     }
+
+
+    public float showAll(){
+        BasicDBObject query = new BasicDBObject();
+        DBCursor cursor = table.find();
+        while (cursor.hasNext()) {
+            System.out.println(cursor.next());
+        }
+        return 0;
+    }
+
+
+    public void add(){
+        BasicDBObject document = new BasicDBObject();
+        document.put("counter", "visitors");
+        document.put("value", 1);
+        table.insert(document);
+    }
+
+    public int getCounterValue(){
+        BasicDBObject query = new BasicDBObject();
+        BasicDBObject searchQuery = new BasicDBObject();
+        searchQuery.put("counter", "visitors");
+        DBCursor cursor = table.find(searchQuery);
+
+        while (cursor.hasNext()) {
+            BasicDBObject object = (BasicDBObject) cursor.next();
+            Integer counter = object.getInt("value");
+            return counter;
+        }
+        return 0;
+    }
+
+    public void update(){
+        BasicDBObject newDocument = new BasicDBObject();
+        newDocument=new BasicDBObject().append("$inc",new BasicDBObject().append("value", 1)); //Увеличиваем счетчик на 1
+        table.update(new BasicDBObject().append("counter", "visitors"),newDocument,true,true);//Обновляем значение для всех, добавляем если нет такого
+    }
+
+
+    public void delete(){
+        BasicDBObject searchQuery = new BasicDBObject();
+        searchQuery.put("counter", "visitors");
+        table.remove(searchQuery);
+    }
+
+
 
 
 }

@@ -67,7 +67,7 @@ public class DashboardUI extends UI {
     public Properties config(){
         //TODO: добавить чтение конфига из файла
         Properties prop = new Properties();
-        prop.setProperty("host", "localhost");
+        prop.setProperty("host", "greenmon.ru");
         prop.setProperty("port", "27017");
         prop.setProperty("dbname", "admin");
         prop.setProperty("login", "root");

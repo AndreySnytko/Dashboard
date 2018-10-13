@@ -19,10 +19,21 @@ public class SquareDashboard extends Window {
         Window subWindow=new Window(object.getName());
         VerticalLayout verticalLayout = new VerticalLayout();
 
-        Button button = new Button("Обновить");
+        Button button = new Button("Обновить"); button.setWidthUndefined();
         Label label1=new Label(); //label1.addStyleName("label"); TODO: Разобраться со стилями
         Label label2=new Label();
+        TextField textField1 = new TextField(); textField1.setReadOnly(true); textField1.setWidth("60");//TODO:высчитывать размер от количества символов (em?)
+        TextField textField2 = new TextField(); textField2.setReadOnly(true); textField2.setWidth("60");
 
+        //Layout для подписей и значений
+        HorizontalLayout horizontalLayout1 = new HorizontalLayout();
+        HorizontalLayout horizontalLayout2 = new HorizontalLayout();
+        horizontalLayout1.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
+        horizontalLayout1.addComponent(label1); horizontalLayout1.setComponentAlignment(label1,Alignment.MIDDLE_LEFT);
+        horizontalLayout1.addComponent(textField1);  horizontalLayout1.setComponentAlignment(textField1,Alignment.MIDDLE_LEFT);
+
+        horizontalLayout2.addComponent(label2); horizontalLayout2.setComponentAlignment(label2,Alignment.MIDDLE_RIGHT);
+        horizontalLayout2.addComponent(textField2);  horizontalLayout2.setComponentAlignment(textField2,Alignment.MIDDLE_RIGHT);
 
         DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
@@ -37,54 +48,62 @@ public class SquareDashboard extends Window {
             button.addClickListener(e -> {
                 String city=boxCities.getValue().toString();
                 ((Weather) object).getData(city);
-                label1.setValue(decimalFormat.format(object.getValues().get(0)));
-                label2.setValue(decimalFormat.format(object.getValues().get(1)));
+                textField1.setValue(decimalFormat.format(object.getValues().get(0))+"C");
+                textField2.setValue(decimalFormat.format(object.getValues().get(1))+"C");
             });
 
             //В случае изменения значения comboBox
             boxCities.addValueChangeListener(event -> {
                 String city=boxCities.getValue().toString();
                 ((Weather) object).getData(city);
-                label1.setValue(decimalFormat.format(object.getValues().get(0)));
-                label2.setValue(decimalFormat.format(object.getValues().get(1)));
+                textField1.setValue(decimalFormat.format(object.getValues().get(0))+"C");
+                textField2.setValue(decimalFormat.format(object.getValues().get(1))+"C");
             });
 
+
+            label1.setValue("Температура текущая:"); //TODO: Вынести названия в класс Weather
+            label2.setValue("Прогноз на завтра:");
+
+            textField1.setValue(decimalFormat.format(object.getValues().get(0))+"C");
+            textField2.setValue(decimalFormat.format(object.getValues().get(1))+"C");
+
+            //Выпадающий список
             boxCities.setSizeFull();
             verticalLayout.addComponents(boxCities);
 
-            label1.setCaption("Температура текущая:"); //TODO: Вынести названия в класс Weather
-            label2.setCaption("Прогноз на завтра:");
+            //Значения с подписями
+            verticalLayout.addComponents(horizontalLayout1);
+            verticalLayout.addComponents(horizontalLayout2);
 
-            label1.setValue(decimalFormat.format(object.getValues().get(0)));
-            label2.setValue(decimalFormat.format(object.getValues().get(1)));
-
-            //label.setValue(object.getValues().get(1).toString());
-
-            verticalLayout.addComponents(label1);
-            verticalLayout.addComponents(label2);
-            verticalLayout.addComponents(button);
+            //Кнопка
+            verticalLayout.addComponents(button); verticalLayout.setComponentAlignment(button, Alignment.BOTTOM_CENTER);
 
         }else if(object instanceof Currency){ //Курс валют
 
 
-            label1.setCaption("USD:"); //TODO: Вынести названия в класс Currency
-            label2.setCaption("EUR:");
-            label1.setValue(decimalFormat.format(object.getValues().get(0)));
-            label2.setValue(decimalFormat.format(object.getValues().get(1)));
+            label1.setValue("USD:"); //TODO: Вынести названия в класс Currency
+            label2.setValue("EUR:");
+            textField1.setValue(decimalFormat.format(object.getValues().get(0)));
+            textField2.setValue(decimalFormat.format(object.getValues().get(1)));
 
-            verticalLayout.addComponents(label1);
-            verticalLayout.addComponents(label2);
-            verticalLayout.addComponents(button);
+            //Значения с подписями
+            verticalLayout.addComponents(horizontalLayout1);
+            verticalLayout.addComponents(horizontalLayout2);
 
-        }else{ // Счетчик посещений
+            //Кнопка
+            verticalLayout.addComponents(button);verticalLayout.setComponentAlignment(button, Alignment.BOTTOM_CENTER);
 
-            label1.setValue(decimalFormat.format(object.getValues().get(0)));
-            verticalLayout.addComponents(label1);
+        }else if(object instanceof Visitors){ // Счетчик посещений
+            textField1.setValue(decimalFormat.format(object.getValues().get(0)));
+            verticalLayout.addComponents(textField1);
+            verticalLayout.setComponentAlignment(textField1, Alignment.BOTTOM_CENTER);
+        }else{
+            //TODO: Ползунок загрузки
         }
 
         subWindow.setContent(verticalLayout);
-        subWindow.setHeight("350px");
-        subWindow.setWidth("250px");
+        subWindow.setHeight("300px");
+        subWindow.setWidth("300px");
         subWindow.setClosable(false);
         subWindow.setDraggable(false);
         subWindow.setResizable(false);

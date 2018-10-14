@@ -11,24 +11,21 @@ import com.vaadin.server.WebBrowser;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.apache.commons.configuration.Configuration;
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.PropertiesConfiguration;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Properties;
 
 @Theme("mytheme")
 public class DashboardUI extends UI {
 
-//    Properties properties;
+
     Configuration config;
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
 
-        config=config();//Вычитываем конфиг
+        config=Utils.config();//Вычитываем конфиг
 
 
         Label mainLabel=new Label("<H3>Тестовое сетевое приложение</H3>",ContentMode.HTML);
@@ -143,28 +140,10 @@ public class DashboardUI extends UI {
     }
 
 
-    public Configuration config(){
-
-        try{
-            Configuration config = new PropertiesConfiguration("dashboard.txt");
-            return config;
-        }catch (Exception e){
-            System.out.println("Конфиг не найден, использую значения по-умолчанию");
-            Configuration config = new PropertiesConfiguration();
-            config.setProperty("host", "greenmon.ru");
-            config.setProperty("port", "27017");
-            config.setProperty("dbname", "admin");
-            config.setProperty("login", "root");
-            config.setProperty("password", "root");
-            config.setProperty("table", "visitors");
-            config.setProperty("weatherURL","http://api.apixu.com/v1/forecast.xml?key=dec6a405f5914a8bbe070116181110&days=2&q="); //q=Novosibirsk
-            config.setProperty("currencyURL","https://www.cbr.ru/scripts/XML_daily.asp");
-            return config;
-        }
 
 
 
-    }
+
 
 
 

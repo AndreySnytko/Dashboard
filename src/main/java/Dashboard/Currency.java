@@ -11,6 +11,9 @@ public class Currency implements Info{
     private float usd;
     private float eur;
 
+    private String errorText="Не смог получить данные с сервера";
+    private int error=1;
+
     private Configuration config;
 
 
@@ -39,6 +42,7 @@ public class Currency implements Info{
                     try {
                         this.usd = Float.parseFloat(usd.replace(',', '.'));
                         this.eur = Float.parseFloat(eur.replace(',', '.'));
+                        error=0;
                     } catch (NumberFormatException e) {
                         this.usd = (float) 0.0;
                         this.eur = (float) 0.0;
@@ -47,7 +51,6 @@ public class Currency implements Info{
             }
 
         }
-
 
     }
 
@@ -62,6 +65,12 @@ public class Currency implements Info{
         return values;
     }
 
+    public String getErrorText() {
+        return errorText;
+    }
 
+    public int getError() {
+        return error;
+    }
 }
 

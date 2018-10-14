@@ -20,7 +20,7 @@ public class SquareDashboard extends Window {
         VerticalLayout verticalLayout = new VerticalLayout();
 
         verticalLayout.setMargin(true);// Добавим внешние отступы лейауту
-        verticalLayout.setSpacing(false);// Добавим отступы между компонентами лейаута
+        verticalLayout.setSpacing(true);// Добавим отступы между компонентами лейаута
 
 
 
@@ -31,8 +31,8 @@ public class SquareDashboard extends Window {
         TextField textField2 = new TextField(); textField2.setReadOnly(true); textField2.setWidth("60");
 
         //Layout для подписей и значений
-        HorizontalLayout horizontalLayout1 = new HorizontalLayout(); horizontalLayout1.addStyleName("backColorGrey"); horizontalLayout1.setWidth("100%");
-        HorizontalLayout horizontalLayout2 = new HorizontalLayout(); horizontalLayout2.addStyleName("backColorBrown"); horizontalLayout2.setWidth("100%");
+        HorizontalLayout horizontalLayout1 = new HorizontalLayout(); /*horizontalLayout1.addStyleName("backColorGrey");*/ horizontalLayout1.setWidth("100%");
+        HorizontalLayout horizontalLayout2 = new HorizontalLayout(); /*horizontalLayout2.addStyleName("backColorBrown");*/ horizontalLayout2.setWidth("100%");
 //        horizontalLayout1.setDefaultComponentAlignment(Alignment.BOTTOM_CENTER);
         horizontalLayout1.addComponent(label1); horizontalLayout1.setComponentAlignment(label1,Alignment.MIDDLE_LEFT);
         horizontalLayout1.addComponent(textField1);  horizontalLayout1.setComponentAlignment(textField1,Alignment.MIDDLE_RIGHT);
@@ -96,14 +96,27 @@ public class SquareDashboard extends Window {
         }else if(object instanceof Currency){ //Курс валют
 
 
-            label1.setValue("USD:"); //TODO: Вынести названия в класс Currency
-            label2.setValue("EUR:");
-            textField1.setValue(decimalFormat.format(object.getValues().get(0)));
-            textField2.setValue(decimalFormat.format(object.getValues().get(1)));
-
-            //Значения с подписями
-            verticalLayout.addComponents(horizontalLayout1);
-            verticalLayout.addComponents(horizontalLayout2);
+            if(((Currency) object).getError()==0) {
+                label1.setValue("USD:"); //TODO: Вынести названия в класс Currency
+                label2.setValue("EUR:");
+                textField1.setValue(decimalFormat.format(object.getValues().get(0)));
+                textField2.setValue(decimalFormat.format(object.getValues().get(1)));
+                //Значения с подписями
+                //TODO: Вынести игры с расположением в style.css
+                horizontalLayout1.setComponentAlignment(label1, Alignment.MIDDLE_RIGHT);
+                horizontalLayout1.setComponentAlignment(textField1, Alignment.MIDDLE_LEFT);
+                horizontalLayout2.setComponentAlignment(label2, Alignment.MIDDLE_RIGHT);
+                horizontalLayout2.setComponentAlignment(textField2, Alignment.MIDDLE_LEFT);
+                horizontalLayout1.setMargin(false);horizontalLayout1.setSpacing(false);
+                horizontalLayout2.setMargin(false);horizontalLayout2.setSpacing(false);
+                verticalLayout.setMargin(true);verticalLayout.setSpacing(false);
+                verticalLayout.addComponents(horizontalLayout1);verticalLayout.setComponentAlignment(horizontalLayout1, Alignment.MIDDLE_CENTER);
+                verticalLayout.addComponents(horizontalLayout2);verticalLayout.setComponentAlignment(horizontalLayout2, Alignment.MIDDLE_CENTER);
+            }else{
+                label1.setValue(((Currency) object).getErrorText());
+                verticalLayout.addComponents(label1);
+                verticalLayout.setComponentAlignment(label1, Alignment.MIDDLE_CENTER);
+            }
 
             //Кнопка
             verticalLayout.addComponents(button);verticalLayout.setComponentAlignment(button, Alignment.BOTTOM_CENTER);

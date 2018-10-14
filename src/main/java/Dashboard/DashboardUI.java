@@ -27,7 +27,6 @@ public class DashboardUI extends UI {
 
         config=Utils.config();//Вычитываем конфиг
 
-
         Label mainLabel=new Label("<H3>Тестовое сетевое приложение</H3>",ContentMode.HTML);
 
         //Получаем информацию о клиенте
@@ -44,7 +43,7 @@ public class DashboardUI extends UI {
         int x=0;
         int y=0;
         String userDisplayResolution=screenWeidth+"x"+screenHeight+" ("+browserWeidth+"x"+browserHeight+")";
-        Label displayLabel=new Label(userDisplayResolution);
+        Label displayLabel=new Label("Разрешение экрана: "+userDisplayResolution);
 
         final VerticalLayout verticalLayout=new VerticalLayout(); //Главное окно в которое будем помещать наши дашборды
         verticalLayout.addComponent(mainLabel); verticalLayout.setComponentAlignment(mainLabel,Alignment.TOP_CENTER);
@@ -52,6 +51,7 @@ public class DashboardUI extends UI {
         //Дата и время
         //Date nowDate = webBrowser.getCurrentDate(); //Локальное время пользователя
         Date nowDate = new Date(); //Серверное время, можно получить TimeZone пользователя
+        //TODO: Обновлять nowDate по нажатию любой кнопки Обновить в subWindows
         Label dateLabel=new Label("Информация по состояни на "+new SimpleDateFormat("dd.MM.YYYY HH:mm:ss",new Locale("ru")).format(nowDate));
 
         final HorizontalLayout buttonHorizontalLayout=new HorizontalLayout();
@@ -60,9 +60,8 @@ public class DashboardUI extends UI {
         buttonHorizontalLayout.addComponent(ipLabel); buttonHorizontalLayout.setComponentAlignment(ipLabel,Alignment.BOTTOM_RIGHT);
 
         verticalLayout.addComponent(buttonHorizontalLayout);verticalLayout.setComponentAlignment(buttonHorizontalLayout,Alignment.BOTTOM_CENTER); verticalLayout.setSizeUndefined();
-        verticalLayout.addStyleName("backColorBrown");
-        verticalLayout.addStyleName("v-scrollable");
-
+//        verticalLayout.addStyleName("backColorBrown");
+//        verticalLayout.addStyleName("v-scrollable");
 
         verticalLayout.setMargin(false);// Добавим внешние отступы лейауту
         verticalLayout.setSpacing(false);// Добавим отступы между компонентами лейаута
@@ -70,34 +69,21 @@ public class DashboardUI extends UI {
         verticalLayout.setHeight("380px");
         setContent(verticalLayout);
 
-//        setContent(mainLabel);
-//        verticalLayout.addComponent(mainLabel));
-//        verticalLayout.addComponent(mainLabel));
-
-        //Если ширина браузера меньше 280 то размещаем вертикально, если отношение сторон высота/ширину>1.5
-        if (Integer.valueOf(browserHeight)>Integer.valueOf(browserWeidth*3/2)){ //TODO: Исправить для сафари
+        //Если ширина браузера меньше 940 то размещаем вертикально, если отношение сторон высота/ширину>1.5
+        if ((browserWeidth<940)||(screenWeidth<940)||(Integer.valueOf(browserHeight)>Integer.valueOf(browserWeidth*3/2))){ //TODO: Исправить для safari
             x=310;
             verticalLayout.setWidth("320px");
             verticalLayout.setHeight("940px");
+        }//TODO: Если форма окна близка к квадрату, располагать окна по 2 в ряд; отслеживать мобильные устройства, размер окон в % от ширины экрана
 
-        }
-
-        // Создаём окно ожидания
-//        Wait wait=new Wait();
-//        SquareDashboard waitDashboard=new SquareDashboard(wait);
-//        Window waitWindow = waitDashboard.drawWindow();
-//        waitWindow.setPosition(10,10);
-//        addWindow(waitWindow);
 
         // Создаём окно погоды
         //TODO:Можно сохранить в localStorage какую погоду просматривал пользователь в последний раз и передвать этот город в конструктор.
         Weather weather=new Weather(config);
         SquareDashboard weatherDashboard=new SquareDashboard(weather);
         Window weatherWindow = weatherDashboard.drawWindow();
-        //        Window weatherWindow = (new SquareDashboard(new Weather())).drawWindow();
         //Размещаем панель погоды в главном окне
         weatherWindow.setPosition(10,50); //TODO: Отслеживать позицию других окон и размещать новое окно относительно уже добавленных
-//        addWindow(weatherWindow);
         UI.getCurrent().addWindow(weatherWindow);
 
 
@@ -108,7 +94,6 @@ public class DashboardUI extends UI {
         Window currencyWindow = currencyDashboard.drawWindow();
         //Размещаем панель курса валют в главном окне
         currencyWindow.setPosition(320-x,50+x);
-//        addWindow(currencyWindow);
         UI.getCurrent().addWindow(currencyWindow);
 
         // Создаём окно посещений
@@ -118,19 +103,6 @@ public class DashboardUI extends UI {
         //Размещаем панель посещений в главном окне
         visitorsWindow.setPosition(630-x*2,50+x*2);
         UI.getCurrent().addWindow(visitorsWindow);
-
-
-
-//        UI.getCurrent().addWindow(window);
-
-//        UI.getCurrent().close(); - Делает все окна неактивными
-//        UI.getCurrent().removeWindow(waitWindow); - Удаляем окна
-//        horizontalLayout.addComponent(visitorsWindow);
-//        horizontalLayout.addComponent(new Label("Thanks "));
-//        setContent(horizontalLayout);
-//        Window window=new Window("Main");
-
-
 
     }
 

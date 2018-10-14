@@ -1,5 +1,6 @@
 package Dashboard;
 
+import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -17,8 +18,11 @@ public class Weather implements Info{
     private String errorText="Не смог получить данные с сервера";
     private int error=1;
 
+    private Configuration config;
 
-    public Weather() {
+
+    public Weather(Configuration config) {
+        this.config=config;
         this.displayCity="Новосибирск";
         this.city="Novosibirsk";
         getData(displayCity);
@@ -42,8 +46,8 @@ public class Weather implements Info{
             default:this.city="Novosibirsk";break;
         }
 
-        HttpsInterface http = new HttpsInterface("http://api.apixu.com/v1/forecast.xml?key=dec6a405f5914a8bbe070116181110&q="+this.city+"&days=2");
-//        HttpsInterface http = new HttpsInterface("http://api.apixu.com/v1/forecast.json?key=dec6a405f5914a8bbe070116181110&q="+this.city+"&days=2");
+        String url=config.getString("weatherURL")+this.city;
+        HttpsInterface http = new HttpsInterface(url);
 
         if(http.getError()==0){   //Если данные с сервера получили
 

@@ -1,5 +1,7 @@
 package Dashboard;
 
+import org.apache.commons.configuration.Configuration;
+
 import java.util.ArrayList;
 
 public class Currency implements Info{
@@ -9,10 +11,12 @@ public class Currency implements Info{
     private float usd;
     private float eur;
 
+    private Configuration config;
 
 
-    public Currency() {
-      this.getData();
+    public Currency(Configuration config) {
+        this.config=config;
+        this.getData();
 
     }
 
@@ -21,7 +25,7 @@ public class Currency implements Info{
     }
 
     public void getData(){
-        HttpsInterface http = new HttpsInterface("https://www.cbr.ru/scripts/XML_daily.asp");
+        HttpsInterface http = new HttpsInterface(config.getString("currencyURL"));
         String strXml=http.sendRequest();
         if(http.getError()==0) {   //Если данные с сервера получили
 

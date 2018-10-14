@@ -1,5 +1,6 @@
 package Dashboard;
 
+import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -9,14 +10,15 @@ public class Visitors implements Info{
 
     private String name="Счетчик посещений";
     private float count;
-    private Properties properties;
+//    private Properties properties;
+    private Configuration config;
 
     public Visitors() {
       this.count=1;
     }
 
-    public Visitors(Properties properties) {
-        this.properties=properties;
+    public Visitors(Configuration config) {
+        this.config=config;
         getData();
     }
 
@@ -26,7 +28,7 @@ public class Visitors implements Info{
 
     public void getData(){
         Mongo mongo;
-        mongo = new Mongo(properties);
+        mongo = new Mongo(config);
 
         if(mongo.getError()==0) {
             mongo.update();

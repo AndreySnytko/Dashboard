@@ -10,6 +10,9 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.server.WebBrowser;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
+import org.apache.commons.configuration.Configuration;
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.PropertiesConfiguration;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,12 +22,13 @@ import java.util.Properties;
 @Theme("mytheme")
 public class DashboardUI extends UI {
 
-    Properties properties;
+//    Properties properties;
+    Configuration config;
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
 
-        properties=config();//Вычитываем конфиг
+        config=config();//Вычитываем конфиг
 
 
         Label mainLabel=new Label("<H3>Тестовое сетевое приложение</H3>",ContentMode.HTML);
@@ -90,7 +94,7 @@ public class DashboardUI extends UI {
 
         // Создаём окно погоды
         //TODO:Можно сохранить в localStorage какую погоду просматривал пользователь в последний раз и передвать этот город в конструктор.
-        Weather weather=new Weather();
+        Weather weather=new Weather(config);
         SquareDashboard weatherDashboard=new SquareDashboard(weather);
         Window weatherWindow = weatherDashboard.drawWindow();
         //        Window weatherWindow = (new SquareDashboard(new Weather())).drawWindow();
@@ -102,7 +106,7 @@ public class DashboardUI extends UI {
 
 
         // Создаём окно курса валюты
-        Currency currency=new Currency();
+        Currency currency=new Currency(config);
         SquareDashboard currencyDashboard=new SquareDashboard(currency);
         Window currencyWindow = currencyDashboard.drawWindow();
         //Размещаем панель курса валют в главном окне
@@ -111,7 +115,7 @@ public class DashboardUI extends UI {
         UI.getCurrent().addWindow(currencyWindow);
 
         // Создаём окно посещений
-        Visitors visitors=new Visitors(properties);
+        Visitors visitors=new Visitors(config);
         SquareDashboard visitorsDashboard=new SquareDashboard(visitors);
         Window visitorsWindow = visitorsDashboard.drawWindow();
         //Размещаем панель посещений в главном окне
@@ -138,16 +142,30 @@ public class DashboardUI extends UI {
     public static class DashboardServlet extends VaadinServlet {
     }
 
-    public Properties config(){
-        //TODO: добавить чтение конфига из файла
-        Properties prop = new Properties();
-        prop.setProperty("host", "greenmon.ru");
-        prop.setProperty("port", "27017");
-        prop.setProperty("dbname", "admin");
-        prop.setProperty("login", "root");
-        prop.setProperty("password", "root");
-        prop.setProperty("table", "visitors");
-        //TODO: Добавить чтение URLов для погоды и валюты из файла.
-        return prop;
+
+    public Configuration config(){
+
+        try{
+            Configuration config = new PropertiesConfiguration("dashboard.txt");
+            return config;
+        }catch (Exception e){
+            System.out.println("Конфиг не найден, использую значения по-умолчанию");
+            Configuration config = new PropertiesConfiguration();
+            config.setProperty("host", "greenmon.ru");
+            config.setProperty("port", "27017");
+            config.setProperty("dbname", "admin");
+            config.setProperty("login", "root");
+            config.setProperty("password", "root");
+            config.setProperty("table", "visitors");
+            config.setProperty("weatherURL","http://api.apixu.com/v1/forecast.xml?key=dec6a405f5914a8bbe070116181110&days=2&q="); //q=Novosibirsk
+            config.setProperty("currencyURL","https://www.cbr.ru/scripts/XML_daily.asp");
+            return config;
+        }
+
+
+
     }
+
+
+
 }

@@ -1,6 +1,7 @@
 package Dashboard;
 
 import com.mongodb.*;
+import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
 import java.net.UnknownHostException;
@@ -19,23 +20,23 @@ public class Mongo {
     final static Logger logger = Logger.getLogger(Mongo.class);
 
 
-    public Mongo(Properties prop) {
+    public Mongo(Configuration config) {
         try {
 
             // Создаем подключение
-            mongoClient = new MongoClient( prop.getProperty("host"), Integer.valueOf(prop.getProperty("port")) );
+            mongoClient = new MongoClient( config.getString("host"), Integer.valueOf(config.getString("port")) );
 
             // Выбираем БД для дальнейшей работы
-            db = mongoClient.getDB(prop.getProperty("dbname"));
+            db = mongoClient.getDB(config.getString("dbname"));
 
             // Входим под созданным логином и паролем
-            authenticate = db.authenticate(prop.getProperty("login"), prop.getProperty("password").toCharArray());
+            authenticate = db.authenticate(config.getString("login"), config.getString("password").toCharArray());
 
             // Выбираем коллекцию/таблицу для дальнейшей работы
-            table = db.getCollection(prop.getProperty("table"));
+            table = db.getCollection(config.getString("table"));
 
         } catch (UnknownHostException e) {
-            error=1; errorText="Не смог подключиться к БД: "+prop.getProperty("host")+":"+prop.getProperty("port")+"/"+prop.getProperty("dbname")+"/"+prop.getProperty("table");
+            error=1; errorText="Не смог подключиться к БД: "+config.getString("host")+":"+config.getString("port")+"/"+config.getString("dbname")+"/"+config.getString("table");
             logger.error(errorText);
             logger.debug(errorText,e);
         }

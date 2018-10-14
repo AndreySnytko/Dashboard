@@ -27,9 +27,14 @@ public class Visitors implements Info{
     public void getData(){
         Mongo mongo;
         mongo = new Mongo(properties);
-        mongo.update();
-        count=mongo.getCounterValue();
-        mongo.close();
+
+        if(mongo.getError()==0) {
+            mongo.update();
+            count = mongo.getCounterValue();
+            mongo.close();
+        }else{
+            count=0;
+        }
 
     }
 

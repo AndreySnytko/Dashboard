@@ -1,5 +1,6 @@
 package Dashboard;
 
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -18,6 +19,11 @@ public class XML {
     String str;
     Document xml;
 
+    private String errorText;
+    private int error=0;
+
+    final static Logger logger = Logger.getLogger(XML.class);
+
     public XML(String str) { //получаем на вход строку и сразу конвертируем ее в xml документ
         this.str = str;
 
@@ -32,9 +38,11 @@ public class XML {
             this.xml = doc;
 
         } catch (Exception e) {
-            e.printStackTrace();
-            //TODO: ДОбавить логирование
-        }//try
+            error=1;
+            errorText="Не XML";
+            logger.error(errorText);
+            logger.debug(errorText+": "+str,e);
+        }
 
     }
 
@@ -61,9 +69,12 @@ public class XML {
             return xmlAttributes;
 
         } catch (Exception e) {
-            e.printStackTrace();
-//            return null;
-            return xmlAttributes;
+            error=2;
+            errorText="Не найден xPath в XML файле"+path+"/"+item;
+            logger.error(errorText);
+            logger.debug(errorText+" XML: "+str,e);
+
+            return null;
         }
     }
 
@@ -100,9 +111,12 @@ public class XML {
             return xmlElements;
 
         } catch (Exception e) {
-            e.printStackTrace();
-//            return null;
-            return xmlElements;
+
+            error=2;
+            errorText="Не найден xPath в XML файле"+path+"/"+item;
+            logger.error(errorText);
+            logger.debug(errorText+" XML: "+str,e);
+            return null;
         }
     }
 
@@ -116,4 +130,11 @@ public class XML {
         }
     }
 
+    public int getError() {
+        return error;
+    }
+
+    public String getErrorText() {
+        return errorText;
+    }
 }

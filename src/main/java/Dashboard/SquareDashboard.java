@@ -67,19 +67,28 @@ public class SquareDashboard extends Window {
             });
 
 
-            label1.setValue("Температура текущая:"); //TODO: Вынести названия в класс Weather
-            label2.setValue("Прогноз на завтра:");
-
-            textField1.setValue(decimalFormat.format(object.getValues().get(0))+"C");
-            textField2.setValue(decimalFormat.format(object.getValues().get(1))+"C");
 
             //Выпадающий список
             boxCities.setSizeFull();
             verticalLayout.addComponents(boxCities);
 
             //Значения с подписями
-            verticalLayout.addComponents(horizontalLayout1);
-            verticalLayout.addComponents(horizontalLayout2);
+            if(((Weather) object).getError()==0){
+
+                label1.setValue("Температура текущая:"); //TODO: Вынести названия в класс Weather
+                label2.setValue("Прогноз на завтра:");
+
+                textField1.setValue(decimalFormat.format(object.getValues().get(0))+"C");
+                textField2.setValue(decimalFormat.format(object.getValues().get(1))+"C");
+
+                verticalLayout.addComponents(horizontalLayout1);
+                verticalLayout.addComponents(horizontalLayout2);
+
+            }else{
+                label1.setValue("Не могу получить данные с сервера");
+                verticalLayout.addComponents(label1);
+                verticalLayout.setComponentAlignment(label1, Alignment.MIDDLE_CENTER);
+            }
 
             //Кнопка
             verticalLayout.addComponents(button); verticalLayout.setComponentAlignment(button, Alignment.BOTTOM_CENTER);
@@ -100,9 +109,16 @@ public class SquareDashboard extends Window {
             verticalLayout.addComponents(button);verticalLayout.setComponentAlignment(button, Alignment.BOTTOM_CENTER);
 
         }else if(object instanceof Visitors){ // Счетчик посещений
-            textField1.setValue(decimalFormat.format(object.getValues().get(0)));
-            verticalLayout.addComponents(textField1);
-            verticalLayout.setComponentAlignment(textField1, Alignment.MIDDLE_CENTER);
+            float count=object.getValues().get(0);
+            if(count!=0) {
+                textField1.setValue(decimalFormat.format(count));
+                verticalLayout.addComponents(textField1);
+                verticalLayout.setComponentAlignment(textField1, Alignment.MIDDLE_CENTER);
+            }else{
+                label1.setValue("Не могу получить данные с сервера");
+                verticalLayout.addComponents(label1);
+                verticalLayout.setComponentAlignment(label1, Alignment.MIDDLE_CENTER);
+            }
         }else{
             //TODO: Ползунок загрузки
         }

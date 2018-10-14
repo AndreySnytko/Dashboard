@@ -12,21 +12,10 @@ import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 
 import java.text.SimpleDateFormat;
-import java.time.Period;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Properties;
 
-//import static com.sun.tools.javac.util.Constants.format;
-//import static java.security.AccessController.getContext;
-
-/**
- * This UI is the application entry point. A UI may either represent a browser window 
- * (or tab) or some part of an HTML page where a Vaadin application is embedded.
- * <p>
- * The UI is initialized using {@link #init(VaadinRequest)}. This method is intended to be 
- * overridden to add component to the user interface and initialize non-component functionality.
- */
 @Theme("mytheme")
 public class DashboardUI extends UI {
 
@@ -45,6 +34,8 @@ public class DashboardUI extends UI {
         Label ipLabel=new Label("Ваш IP:"+webBrowser.getAddress()); //TODO: Получить ещё и локальный ip пользователя; иногда возвращает IPv6(бага vaadin)
 
         //TODO: Менять расположение и размер окон в зависимости от разрешения дисплея и окна браузера
+
+        //Получаем параметры окна браузера и разрешение экрана
         int browserWeidth=UI.getCurrent().getPage().getBrowserWindowWidth();
         int browserHeight=UI.getCurrent().getPage().getBrowserWindowHeight();
         int screenWeidth=webBrowser.getScreenWidth();
@@ -78,13 +69,9 @@ public class DashboardUI extends UI {
         verticalLayout.setHeight("380px");
         setContent(verticalLayout);
 
-
 //        setContent(mainLabel);
 //        verticalLayout.addComponent(mainLabel));
 //        verticalLayout.addComponent(mainLabel));
-
-
-
 
         //Если ширина браузера меньше 280 то размещаем вертикально, если отношение сторон высота/ширину>1.5
         if (Integer.valueOf(browserHeight)>Integer.valueOf(browserWeidth*3/2)){ //TODO: Исправить для сафари
@@ -93,8 +80,6 @@ public class DashboardUI extends UI {
             verticalLayout.setHeight("940px");
 
         }
-
-
 
         // Создаём окно ожидания
 //        Wait wait=new Wait();

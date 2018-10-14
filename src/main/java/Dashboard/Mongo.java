@@ -1,6 +1,7 @@
 package Dashboard;
 
 import com.mongodb.*;
+import org.apache.log4j.Logger;
 
 import java.net.UnknownHostException;
 import java.util.Properties;
@@ -11,6 +12,12 @@ public class Mongo {
     private DB db;
     private boolean authenticate; // состояние подключения к БД
     private DBCollection table;
+
+    private String errorText;
+    private int error=0;
+
+    final static Logger logger = Logger.getLogger(Mongo.class);
+
 
     public Mongo(Properties prop) {
         try {
@@ -28,7 +35,9 @@ public class Mongo {
             table = db.getCollection(prop.getProperty("table"));
 
         } catch (UnknownHostException e) {
-            //TODO:логирования ошибки подключения к базе
+            error=1; errorText="Не смог подключиться к БД: "+prop.getProperty("host")+":"+prop.getProperty("port")+"/"+prop.getProperty("dbname")+"/"+prop.getProperty("table");
+            logger.error(errorText);
+            logger.debug(errorText,e);
         }
     }
 
@@ -81,7 +90,11 @@ public class Mongo {
         table.remove(searchQuery);
     }
 
+    public int getError(){
+        return error;
+    }
 
-
-
+    public String getErrorText() {
+        return errorText;
+    }
 }

@@ -1,6 +1,7 @@
 package Dashboard;
 
 
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 
 import java.io.*;
@@ -13,8 +14,12 @@ public class HttpsInterface
 {
 
     private String url;
-    private String connectionError;
+
+    private String errorText;
     private int error=0;
+
+    final static Logger logger = Logger.getLogger(HttpsInterface.class);
+
 
 
     public HttpsInterface(String url)
@@ -50,13 +55,10 @@ public class HttpsInterface
             outStreamWriter.close();
             outStream.close();
 
-            //TODO: Добавить логирование ответов от сервера.
-            //System.out.println("ResponseCode:"+httpConnection.getResponseCode());
-            //  System.out.println("ResponseMessage:"+httpConnection.getResponseMessage());
+            errorText="URL запроса: "+url+"   ResponseCode:"+httpConnection.getResponseCode()+" ResponseMessage:"+httpConnection.getResponseMessage();
 
             BufferedReader in = new BufferedReader(new InputStreamReader(httpConnection.getInputStream()));
             String inputLine;
-
 
             while ((inputLine = in.readLine()) != null) {
                 responseXml=responseXml+inputLine;
@@ -66,26 +68,35 @@ public class HttpsInterface
         }
         catch (SocketTimeoutException se)
         {
-            connectionError="SocketTimeoutException";
+            errorText="Не смог получить данные (SocketTimeoutException) по urlу: "+url;
             error=1;
+            logger.error(errorText,se);
         }
         catch (MalformedURLException me)
         {
-            connectionError="MalformedURLException";
+            errorText="Не смог получить данные (MalformedURLException) по urlу: "+url;
             error=2;
+            logger.error(errorText,me);
         }
         catch (Exception e)
         {
-            connectionError="Another error";
+            errorText="Не смог получить данные (Прочие ошибки) по urlу: "+url;
             error=3;
+            logger.error(errorText,e);
 
         }finally {
-            //TODO: Добавить логирование результатов
-            //System.out.println("connectionError:"+connectionError);
+            logger.debug(errorText);
         }
 
         return responseXml;
     }
 
 
+    public int getError() {
+        return error;
+    }
+
+    public String getErrorText() {
+        return errorText;
+    }
 }

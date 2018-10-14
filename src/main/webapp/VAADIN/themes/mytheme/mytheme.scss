@@ -36,4 +36,25 @@
   @include valo;
 
   // Insert your own theme rules here
+
+  .backColorGrey {
+    background-color: #D68E60;
+  }
+
+  .backColorBrown
+  {
+    background-color: #D68E60;
+  }
+
+  .v-window-review {
+    background-color: #814620;
+    .v-window-closebox,
+    .v-window-maximizebox,
+    .v-window-restorebox {
+      background-color: #D67435;
+    }
+  }
+
+
+
 }

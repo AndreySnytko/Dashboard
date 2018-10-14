@@ -19,20 +19,26 @@ public class SquareDashboard extends Window {
         Window subWindow=new Window(object.getName());
         VerticalLayout verticalLayout = new VerticalLayout();
 
+        verticalLayout.setMargin(true);// Добавим внешние отступы лейауту
+        verticalLayout.setSpacing(false);// Добавим отступы между компонентами лейаута
+
+
+
         Button button = new Button("Обновить"); button.setWidthUndefined();
-        Label label1=new Label(); //label1.addStyleName("label"); TODO: Разобраться со стилями
+        Label label1=new Label();
         Label label2=new Label();
         TextField textField1 = new TextField(); textField1.setReadOnly(true); textField1.setWidth("60");//TODO:высчитывать размер от количества символов (em?)
         TextField textField2 = new TextField(); textField2.setReadOnly(true); textField2.setWidth("60");
 
         //Layout для подписей и значений
-        HorizontalLayout horizontalLayout1 = new HorizontalLayout();
-        HorizontalLayout horizontalLayout2 = new HorizontalLayout();
-        horizontalLayout1.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
+        HorizontalLayout horizontalLayout1 = new HorizontalLayout(); horizontalLayout1.addStyleName("backColorGrey"); horizontalLayout1.setWidth("100%");
+        HorizontalLayout horizontalLayout2 = new HorizontalLayout(); horizontalLayout2.addStyleName("backColorBrown"); horizontalLayout2.setWidth("100%");
+//        horizontalLayout1.setDefaultComponentAlignment(Alignment.BOTTOM_CENTER);
         horizontalLayout1.addComponent(label1); horizontalLayout1.setComponentAlignment(label1,Alignment.MIDDLE_LEFT);
-        horizontalLayout1.addComponent(textField1);  horizontalLayout1.setComponentAlignment(textField1,Alignment.MIDDLE_LEFT);
+        horizontalLayout1.addComponent(textField1);  horizontalLayout1.setComponentAlignment(textField1,Alignment.MIDDLE_RIGHT);
 
-        horizontalLayout2.addComponent(label2); horizontalLayout2.setComponentAlignment(label2,Alignment.MIDDLE_RIGHT);
+//        horizontalLayout2.setDefaultComponentAlignment(Alignment.BOTTOM_CENTER);
+        horizontalLayout2.addComponent(label2); horizontalLayout2.setComponentAlignment(label2,Alignment.MIDDLE_LEFT);
         horizontalLayout2.addComponent(textField2);  horizontalLayout2.setComponentAlignment(textField2,Alignment.MIDDLE_RIGHT);
 
         DecimalFormat decimalFormat = new DecimalFormat("#.##");
@@ -96,16 +102,18 @@ public class SquareDashboard extends Window {
         }else if(object instanceof Visitors){ // Счетчик посещений
             textField1.setValue(decimalFormat.format(object.getValues().get(0)));
             verticalLayout.addComponents(textField1);
-            verticalLayout.setComponentAlignment(textField1, Alignment.BOTTOM_CENTER);
+            verticalLayout.setComponentAlignment(textField1, Alignment.MIDDLE_CENTER);
         }else{
             //TODO: Ползунок загрузки
         }
 
+//        verticalLayout.addStyleName("backColorRed");
+        verticalLayout.setHeight("100%");
         subWindow.setContent(verticalLayout);
         subWindow.setHeight("300px");
         subWindow.setWidth("300px");
         subWindow.setClosable(false);
-        subWindow.setDraggable(false);
+//        subWindow.setDraggable(false);
         subWindow.setResizable(false);
 
         return subWindow;

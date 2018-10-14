@@ -1,5 +1,7 @@
 package Dashboard;
 
+import org.apache.log4j.Logger;
+
 import java.util.ArrayList;
 import java.util.Properties;
 
@@ -8,7 +10,6 @@ public class Visitors implements Info{
     private String name="Счетчик посещений";
     private float count;
     private Properties properties;
-
 
     public Visitors() {
       this.count=1;

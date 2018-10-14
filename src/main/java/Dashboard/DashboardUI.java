@@ -4,14 +4,21 @@ import javax.servlet.annotation.WebServlet;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
+import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
+import com.vaadin.server.WebBrowser;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 
+import java.text.SimpleDateFormat;
+import java.time.Period;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Properties;
 
-import static java.security.AccessController.getContext;
+//import static com.sun.tools.javac.util.Constants.format;
+//import static java.security.AccessController.getContext;
 
 /**
  * This UI is the application entry point. A UI may either represent a browser window 
@@ -30,30 +37,61 @@ public class DashboardUI extends UI {
 
         properties=config();//Вычитываем конфиг
 
-        final Window window = new Window();
-        window.center();
-        window.setWidth("1000px");
-        window.setHeight("500px");
 
-//        Label mainLabel=new Label("<H3>Тестовое сетевое приложение</H3>",ContentMode.HTML);
-        Label mainLabel=new Label("Тестовое сетевое приложение");
-//        final VerticalLayout verticalLayout=new VerticalLayout(); //Главное окно в которое будем помещать наши дашборды
-//        verticalLayout.addComponent(mainLabel);
-        setContent(mainLabel);
+        Label mainLabel=new Label("<H3>Тестовое сетевое приложение</H3>",ContentMode.HTML);
 
+        //Получаем информацию о клиенте
+        WebBrowser webBrowser = Page.getCurrent().getWebBrowser();
+        Label ipLabel=new Label("Ваш IP:"+webBrowser.getAddress()); //TODO: Получить ещё и локальный ip пользователя; иногда возвращает IPv6(бага vaadin)
 
-        //TODO: Менять расположение и размер окон в зависимости от разрешения браузера
+        //TODO: Менять расположение и размер окон в зависимости от разрешения дисплея и окна браузера
         int browserWeidth=UI.getCurrent().getPage().getBrowserWindowWidth();
         int browserHeight=UI.getCurrent().getPage().getBrowserWindowHeight();
+        int screenWeidth=webBrowser.getScreenWidth();
+        int screenHeight=webBrowser.getScreenHeight();
         int x=0;
         int y=0;
-        System.out.println("Width: "+UI.getCurrent().getPage().getBrowserWindowWidth());
-        System.out.println("Height: "+UI.getCurrent().getPage().getBrowserWindowHeight());
+        String userDisplayResolution=screenWeidth+"x"+screenHeight+" ("+browserWeidth+"x"+browserHeight+")";
+        Label displayLabel=new Label(userDisplayResolution);
+
+        final VerticalLayout verticalLayout=new VerticalLayout(); //Главное окно в которое будем помещать наши дашборды
+        verticalLayout.addComponent(mainLabel); verticalLayout.setComponentAlignment(mainLabel,Alignment.TOP_CENTER);
+
+        //Дата и время
+        //Date nowDate = webBrowser.getCurrentDate(); //Локальное время пользователя
+        Date nowDate = new Date(); //Серверное время, можно получить TimeZone пользователя
+        Label dateLabel=new Label("Информация по состояни на "+new SimpleDateFormat("dd.MM.YYYY HH:mm:ss",new Locale("ru")).format(nowDate));
+
+        final HorizontalLayout buttonHorizontalLayout=new HorizontalLayout();
+        buttonHorizontalLayout.addComponent(dateLabel); buttonHorizontalLayout.setComponentAlignment(dateLabel,Alignment.BOTTOM_LEFT);
+        buttonHorizontalLayout.addComponent(displayLabel); buttonHorizontalLayout.setComponentAlignment(displayLabel,Alignment.BOTTOM_CENTER);
+        buttonHorizontalLayout.addComponent(ipLabel); buttonHorizontalLayout.setComponentAlignment(ipLabel,Alignment.BOTTOM_RIGHT);
+
+        verticalLayout.addComponent(buttonHorizontalLayout);verticalLayout.setComponentAlignment(buttonHorizontalLayout,Alignment.BOTTOM_CENTER); verticalLayout.setSizeUndefined();
+        verticalLayout.addStyleName("backColorBrown");
+        verticalLayout.addStyleName("v-scrollable");
+
+
+        verticalLayout.setMargin(false);// Добавим внешние отступы лейауту
+        verticalLayout.setSpacing(false);// Добавим отступы между компонентами лейаута
+        verticalLayout.setWidth("940px");
+        verticalLayout.setHeight("380px");
+        setContent(verticalLayout);
+
+
+//        setContent(mainLabel);
+//        verticalLayout.addComponent(mainLabel));
+//        verticalLayout.addComponent(mainLabel));
+
+
 
 
         //Если ширина браузера меньше 280 то размещаем вертикально, если отношение сторон высота/ширину>1.5
-        if (Integer.valueOf(browserHeight)>Integer.valueOf(browserWeidth*3/2)){
+        if (Integer.valueOf(browserHeight)>Integer.valueOf(browserWeidth*3/2)){ //TODO: Исправить для сафари
             x=310;
+            verticalLayout.setWidth("320px");
+            verticalLayout.setHeight("940px");
+
         }
 
 
@@ -72,12 +110,10 @@ public class DashboardUI extends UI {
         Window weatherWindow = weatherDashboard.drawWindow();
         //        Window weatherWindow = (new SquareDashboard(new Weather())).drawWindow();
         //Размещаем панель погоды в главном окне
-        weatherWindow.setPosition(10,40); //TODO: Отслеживать позицию других окон и размещать новое окно относительно уже добавленных
-        addWindow(weatherWindow);
+        weatherWindow.setPosition(10,50); //TODO: Отслеживать позицию других окон и размещать новое окно относительно уже добавленных
+//        addWindow(weatherWindow);
+        UI.getCurrent().addWindow(weatherWindow);
 
-
-
-//        horizontalLayout.addComponent(weatherWindow);
 
 
         // Создаём окно курса валюты
@@ -85,22 +121,24 @@ public class DashboardUI extends UI {
         SquareDashboard currencyDashboard=new SquareDashboard(currency);
         Window currencyWindow = currencyDashboard.drawWindow();
         //Размещаем панель курса валют в главном окне
-        currencyWindow.setPosition(320-x,40+x);
-        addWindow(currencyWindow);
-//        horizontalLayout.addComponent(currencyWindow);
-
+        currencyWindow.setPosition(320-x,50+x);
+//        addWindow(currencyWindow);
+        UI.getCurrent().addWindow(currencyWindow);
 
         // Создаём окно посещений
         Visitors visitors=new Visitors(properties);
         SquareDashboard visitorsDashboard=new SquareDashboard(visitors);
         Window visitorsWindow = visitorsDashboard.drawWindow();
         //Размещаем панель посещений в главном окне
-        visitorsWindow.setPosition(630-x*2,40+x*2);
-        addWindow(visitorsWindow);
+        visitorsWindow.setPosition(630-x*2,50+x*2);
+        UI.getCurrent().addWindow(visitorsWindow);
 
 
 
+//        UI.getCurrent().addWindow(window);
 
+//        UI.getCurrent().close(); - Делает все окна неактивными
+//        UI.getCurrent().removeWindow(waitWindow); - Удаляем окна
 //        horizontalLayout.addComponent(visitorsWindow);
 //        horizontalLayout.addComponent(new Label("Thanks "));
 //        setContent(horizontalLayout);
@@ -125,7 +163,6 @@ public class DashboardUI extends UI {
         prop.setProperty("password", "root");
         prop.setProperty("table", "visitors");
         //TODO: Добавить чтение URLов для погоды и валюты из файла.
-
         return prop;
     }
 }

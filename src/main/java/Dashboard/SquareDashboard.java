@@ -1,6 +1,5 @@
 package Dashboard;
 
-//import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 
 import java.text.DecimalFormat;
@@ -85,7 +84,7 @@ public class SquareDashboard extends Window {
                 verticalLayout.addComponents(horizontalLayout2);
 
             }else{
-                label1.setValue("Не могу получить данные с сервера");
+                label1.setValue("Не могу получить данные");
                 verticalLayout.addComponents(label1);
                 verticalLayout.setComponentAlignment(label1, Alignment.MIDDLE_CENTER);
             }
@@ -128,7 +127,7 @@ public class SquareDashboard extends Window {
                 verticalLayout.addComponents(textField1);
                 verticalLayout.setComponentAlignment(textField1, Alignment.MIDDLE_CENTER);
             }else{
-                label1.setValue("Не могу получить данные с сервера");
+                label1.setValue("Не могу получить данные");
                 verticalLayout.addComponents(label1);
                 verticalLayout.setComponentAlignment(label1, Alignment.MIDDLE_CENTER);
             }
@@ -136,13 +135,11 @@ public class SquareDashboard extends Window {
             //TODO: Ползунок загрузки
         }
 
-//        verticalLayout.addStyleName("backColorRed");
         verticalLayout.setHeight("100%");
         subWindow.setContent(verticalLayout);
         subWindow.setHeight("300px");
         subWindow.setWidth("300px");
         subWindow.setClosable(false);
-//        subWindow.setDraggable(false);
         subWindow.setResizable(false);
 
         return subWindow;

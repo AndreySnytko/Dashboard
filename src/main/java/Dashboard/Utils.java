@@ -15,7 +15,7 @@ public class Utils {
     public static Configuration config() {
 
         try {
-            Configuration config = new PropertiesConfiguration("dashboard.config");
+            Configuration config = new PropertiesConfiguration("/opt/dashboard/dashboard.config");
             return config;
         } catch (Exception e) {
             errorText="Конфиг не найден, использую значения по-умолчанию";

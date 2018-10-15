@@ -6,8 +6,7 @@ import java.util.ArrayList;
 
 public class Currency implements Info{
 
-    private String name="Курсы валют";
-
+    private static final String NAME ="Курсы валют";
     private float usd;
     private float eur;
 
@@ -24,7 +23,7 @@ public class Currency implements Info{
     }
 
     public String getName(){
-        return this.name;
+        return NAME;
     }
 
     public void getData(){
@@ -59,7 +58,7 @@ public class Currency implements Info{
     }
 
     public ArrayList<Float> getValues() {
-        ArrayList<Float> values=new ArrayList<Float>();
+        ArrayList<Float> values=new ArrayList<>();
         values.add(usd);
         values.add(eur);
         return values;

@@ -34,7 +34,6 @@ public class DashboardUI extends UI {
         Label ipLabel=new Label("Ваш IP:"+webBrowser.getAddress()); //TODO: Получить ещё и локальный ip пользователя; иногда возвращает IPv6(бага vaadin)
 
         //TODO: Менять расположение и размер окон в зависимости от разрешения дисплея и окна браузера
-
         //Получаем параметры окна браузера и разрешение экрана
         int browserWeidth=UI.getCurrent().getPage().getBrowserWindowWidth();
         int browserHeight=UI.getCurrent().getPage().getBrowserWindowHeight();
@@ -49,7 +48,6 @@ public class DashboardUI extends UI {
         verticalLayout.addComponent(mainLabel); verticalLayout.setComponentAlignment(mainLabel,Alignment.TOP_CENTER);
 
         //Дата и время
-        //Date nowDate = webBrowser.getCurrentDate(); //Локальное время пользователя
         Date nowDate = new Date(); //Серверное время, можно получить TimeZone пользователя
         //TODO: Обновлять nowDate по нажатию любой кнопки Обновить в subWindows
         Label dateLabel=new Label("Информация по состояни на "+new SimpleDateFormat("dd.MM.YYYY HH:mm:ss",new Locale("ru")).format(nowDate));
@@ -60,8 +58,6 @@ public class DashboardUI extends UI {
         buttonHorizontalLayout.addComponent(ipLabel); buttonHorizontalLayout.setComponentAlignment(ipLabel,Alignment.BOTTOM_RIGHT);
 
         verticalLayout.addComponent(buttonHorizontalLayout);verticalLayout.setComponentAlignment(buttonHorizontalLayout,Alignment.BOTTOM_CENTER); verticalLayout.setSizeUndefined();
-//        verticalLayout.addStyleName("backColorBrown");
-//        verticalLayout.addStyleName("v-scrollable");
 
         verticalLayout.setMargin(false);// Добавим внешние отступы лейауту
         verticalLayout.setSpacing(false);// Добавим отступы между компонентами лейаута
@@ -70,7 +66,7 @@ public class DashboardUI extends UI {
         setContent(verticalLayout);
 
         //Если ширина браузера меньше 940 то размещаем вертикально, если отношение сторон высота/ширину>1.5
-        if ((browserWeidth<940)||(screenWeidth<940)||(Integer.valueOf(browserHeight)>Integer.valueOf(browserWeidth*3/2))){ //TODO: Исправить для safari
+        if ((browserWeidth<940)||(Integer.valueOf(browserHeight)>Integer.valueOf(browserWeidth*3/2))){ //TODO: Исправить для safari
             x=310;
             verticalLayout.setWidth("320px");
             verticalLayout.setHeight("940px");

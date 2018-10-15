@@ -2,8 +2,6 @@ package Dashboard;
 
 
 import org.apache.log4j.Logger;
-import org.w3c.dom.Document;
-
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -70,22 +68,22 @@ public class HttpsInterface
         {
             errorText="Не смог получить данные (SocketTimeoutException) по urlу: "+url;
             error=1;
-            logger.error(errorText,se);
+            logger.debug(errorText,se);
         }
         catch (MalformedURLException me)
         {
             errorText="Не смог получить данные (MalformedURLException) по urlу: "+url;
             error=2;
-            logger.error(errorText,me);
+            logger.debug(errorText,me);
         }
         catch (Exception e)
         {
             errorText="Не смог получить данные (Прочие ошибки) по urlу: "+url;
             error=3;
-            logger.error(errorText,e);
+            logger.debug(errorText,e);
 
         }finally {
-            logger.debug(errorText);
+            logger.info(errorText);
         }
 
         return responseXml;

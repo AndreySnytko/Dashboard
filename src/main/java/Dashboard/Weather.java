@@ -1,17 +1,14 @@
 package Dashboard;
 
 import org.apache.commons.configuration.Configuration;
-import org.apache.log4j.Logger;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Weather implements Info{
 
-    private String name="Погода";
+    private static final String NAME ="Погода";
     private String city;
     private String displayCity;
-    private ArrayList<String> cities;
+    private ArrayList<String> cities;//TODO: Переделать на enum
     private float currentTemp=0;
     private float tomorrowTemp=0;
 
@@ -34,7 +31,7 @@ public class Weather implements Info{
     }
 
     public String getName(){
-        return this.name;
+        return NAME;
     }
 
     public void getData(String displayCity){
@@ -78,7 +75,7 @@ public class Weather implements Info{
     }
 
     public ArrayList<Float> getValues() {
-        ArrayList<Float> values=new ArrayList<Float>();
+        ArrayList<Float> values=new ArrayList<>();
         values.add(currentTemp);
         values.add(tomorrowTemp);
         return values;

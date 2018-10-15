@@ -49,7 +49,6 @@ public class SquareDashboard extends Window {
             boxCities.setEmptySelectionAllowed(false);
 
             //В случае нажатия кнопки обновляем данные и меняем значение лейблов
-            //TODO: использовать один метод для 2х листенеров
             button.addClickListener(e -> {
                 String city=boxCities.getValue().toString();
                 ((Weather) object).getData(city);
@@ -93,6 +92,12 @@ public class SquareDashboard extends Window {
             verticalLayout.addComponents(button); verticalLayout.setComponentAlignment(button, Alignment.BOTTOM_CENTER);
 
         }else if(object instanceof Currency){ //Курс валют
+
+            button.addClickListener(e -> {
+                ((Currency) object).getData();
+                textField1.setValue(decimalFormat.format(object.getValues().get(0)));
+                textField2.setValue(decimalFormat.format(object.getValues().get(1)));
+            });
 
 
             if(((Currency) object).getError()==0) {

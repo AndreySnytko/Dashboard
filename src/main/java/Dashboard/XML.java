@@ -16,12 +16,10 @@ import java.io.StringReader;
 import java.util.ArrayList;
 
 public class XML {
-    String str;
-    Document xml;
-
+    private String str;
+    private Document xml;
     private String errorText;
     private int error=0;
-
     final static Logger logger = Logger.getLogger(XML.class);
 
     public XML(String str) { //получаем на вход строку и сразу конвертируем ее в xml документ
@@ -48,13 +46,12 @@ public class XML {
 
 
     public ArrayList<String> getXmlAttributes(String path, String item) {
-        ArrayList<String> xmlAttributes = new ArrayList<String>();
+        ArrayList<String> xmlAttributes = new ArrayList<>();
         try {
 
             //Указываем XPath по которому перебирать элементы
             XPath xPath = XPathFactory.newInstance().newXPath();
-            String expression = path;
-            NodeList nodeList = (NodeList) xPath.compile(expression).evaluate(xml, XPathConstants.NODESET);
+            NodeList nodeList = (NodeList) xPath.compile(path).evaluate(xml, XPathConstants.NODESET);
 
             //Перебираем элементы с именем item
             for (int i = 0; i < nodeList.getLength(); i++) {
@@ -79,8 +76,7 @@ public class XML {
     }
 
     public String getFirstXmlAttribute(String path, String item) {
-        ArrayList<String> xmlAttributes = new ArrayList<String>();
-        xmlAttributes = getXmlAttributes(path,item);
+        ArrayList<String> xmlAttributes =getXmlAttributes(path,item);
         if (xmlAttributes.size() > 0) {
             return xmlAttributes.get(0);
         } else {
@@ -89,13 +85,11 @@ public class XML {
     }
 
     public ArrayList<String> getXmlElements(String path, String item) {
-        ArrayList<String> xmlElements = new ArrayList<String>();
+        ArrayList<String> xmlElements = new ArrayList<>();
         try {
-
             //Указываем XPath по которому перебирать элементы
             XPath xPath = XPathFactory.newInstance().newXPath();
-            String expression = path;
-            NodeList nodeList = (NodeList) xPath.compile(expression).evaluate(xml, XPathConstants.NODESET);
+            NodeList nodeList = (NodeList) xPath.compile(path).evaluate(xml, XPathConstants.NODESET);
 
             //Перебираем элементы с именем item
             for (int i = 0; i < nodeList.getLength(); i++) {
@@ -121,8 +115,7 @@ public class XML {
     }
 
     public String getFirstXmlElement(String path, String item) {
-        ArrayList<String> xmlElements = new ArrayList<String>();
-        xmlElements=getXmlElements(path,item);
+        ArrayList<String> xmlElements = getXmlElements(path,item);
         if (xmlElements.size() > 0) {
             return xmlElements.get(0);
         } else {

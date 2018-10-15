@@ -1,16 +1,11 @@
 package Dashboard;
 
 import org.apache.commons.configuration.Configuration;
-import org.apache.log4j.Logger;
-
 import java.util.ArrayList;
-import java.util.Properties;
-
 public class Visitors implements Info{
 
-    private String name="Счетчик посещений";
+    private static final String NAME ="Счетчик посещений";
     private float count;
-//    private Properties properties;
     private Configuration config;
 
     public Visitors() {
@@ -23,7 +18,7 @@ public class Visitors implements Info{
     }
 
     public String getName(){
-        return this.name;
+        return NAME;
     }
 
     public void getData(){
@@ -45,7 +40,7 @@ public class Visitors implements Info{
     }
 
     public ArrayList<Float> getValues() {
-        ArrayList<Float> values=new ArrayList<Float>();
+        ArrayList<Float> values=new ArrayList<>();
         values.add(count);
         return values;
     }

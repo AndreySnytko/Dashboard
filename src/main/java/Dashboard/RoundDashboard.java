@@ -1,27 +1,23 @@
 package Dashboard;
 
 import com.vaadin.ui.*;
+import org.apache.log4j.Layout;
 
 import java.text.DecimalFormat;
 
 
-public class SquareDashboard extends Window {
+public class RoundDashboard extends VerticalLayout {
 
     private Info object;//Погода, валюта, счетчик
 
-    public SquareDashboard(Info object){
+    public RoundDashboard(Info object){
         this.object=object;
     }
 
-    public Window drawWindow(){  //Отрисовываем окно
-
-        Window subWindow=new Window(object.getName());
+    public VerticalLayout drawWindow(){  //Отрисовываем окно
         VerticalLayout verticalLayout = new VerticalLayout();
-
-
-        /*TOT2018*/
-//        subWindow.addStyleName("backColorBrown");
-//        subWindow.addStyleName("rounded_border");
+        verticalLayout.addStyleName("circle");
+        verticalLayout.addStyleName("backColorGrey ");
 
 
 
@@ -42,10 +38,10 @@ public class SquareDashboard extends Window {
 //        horizontalLayout1.setDefaultComponentAlignment(Alignment.BOTTOM_CENTER);
         horizontalLayout1.addComponent(label1); horizontalLayout1.setComponentAlignment(label1,Alignment.MIDDLE_LEFT);
         horizontalLayout1.addComponent(textField1);  horizontalLayout1.setComponentAlignment(textField1,Alignment.MIDDLE_RIGHT);
-
 //        horizontalLayout2.setDefaultComponentAlignment(Alignment.BOTTOM_CENTER);
         horizontalLayout2.addComponent(label2); horizontalLayout2.setComponentAlignment(label2,Alignment.MIDDLE_LEFT);
         horizontalLayout2.addComponent(textField2);  horizontalLayout2.setComponentAlignment(textField2,Alignment.MIDDLE_RIGHT);
+
 
         DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
@@ -135,9 +131,11 @@ public class SquareDashboard extends Window {
         }else if(object instanceof Visitors){ // Счетчик посещений
             float count=object.getValues().get(0);
             if(count!=0) {
-                textField1.setValue(decimalFormat.format(count));
-                verticalLayout.addComponents(textField1);
-                verticalLayout.setComponentAlignment(textField1, Alignment.MIDDLE_CENTER);
+                Label label =new Label(decimalFormat.format(count));
+                label.setSizeFull(); label.setStyleName("bigtext");
+                verticalLayout.addComponents(label);
+                verticalLayout.setComponentAlignment(label, Alignment.MIDDLE_CENTER);
+                verticalLayout.setSizeFull();
             }else{
                 label1.setValue("Не могу получить данные");
                 verticalLayout.addComponents(label1);
@@ -148,16 +146,15 @@ public class SquareDashboard extends Window {
         }
 
 
-        //TOT2018 verticalLayout.setHeight("100%");
 
 
-        subWindow.setContent(verticalLayout);
-        subWindow.setHeight("300px");
-        subWindow.setWidth("300px");
-        subWindow.setClosable(false);
-        subWindow.setResizable(false);
 
-        return subWindow;
+
+
+
+
+
+        return verticalLayout;
     }
 
 

@@ -15057,7 +15057,11 @@ div.v-layout.v-horizontal.v-widget {
 }
 
 .mytheme .backColorGrey {
-	background-color: #D68E60;
+	background-color: #CCCCCC;
+}
+
+.mytheme .backColorDarkGrey {
+    background-color: #999999;
 }
 
 .mytheme .backColorBrown {

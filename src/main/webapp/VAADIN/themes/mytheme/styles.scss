@@ -7,5 +7,5 @@
 .mytheme {
   @include addons;
   @include mytheme;
-
+  @include dashboard;
 }

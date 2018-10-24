@@ -17,7 +17,7 @@ public class RoundDashboard extends VerticalLayout {
     public VerticalLayout drawWindow(){  //Отрисовываем окно
         VerticalLayout verticalLayout = new VerticalLayout();
         verticalLayout.addStyleName("circle");
-        verticalLayout.addStyleName("backColorGrey ");
+//        verticalLayout.addStyleName("backColorGrey ");
 
 
 
@@ -131,11 +131,20 @@ public class RoundDashboard extends VerticalLayout {
         }else if(object instanceof Visitors){ // Счетчик посещений
             float count=object.getValues().get(0);
             if(count!=0) {
+
+//                HorizontalLayout smallLayout = new HorizontalLayout();
                 Label label =new Label(decimalFormat.format(count));
-                label.setSizeFull(); label.setStyleName("bigtext");
+                label.setSizeUndefined(); label.setStyleName("bigtext");
+//                smallLayout.addComponents(label);
+//                smallLayout.setComponentAlignment(label, Alignment.MIDDLE_CENTER);
+//                smallLayout.setSizeFull();
+//                verticalLayout.setComponentAlignment(label, Alignment.MIDDLE_CENTER);
+                label.addStyleName("smallcircle");
+//                verticalLayout.setComponentAlignment(label, Alignment.MIDDLE_CENTER);
+//                smallLayout.addStyleName("smallcircle");
+//                verticalLayout.setComponentAlignment(smallLayout, Alignment.MIDDLE_CENTER);
+
                 verticalLayout.addComponents(label);
-                verticalLayout.setComponentAlignment(label, Alignment.MIDDLE_CENTER);
-                verticalLayout.setSizeFull();
             }else{
                 label1.setValue("Не могу получить данные");
                 verticalLayout.addComponents(label1);

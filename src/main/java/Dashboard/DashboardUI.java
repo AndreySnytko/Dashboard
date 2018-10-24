@@ -29,7 +29,8 @@ public class DashboardUI extends UI {
 
         config=Utils.config();//Вычитываем конфиг
 
-        Label mainLabel=new Label("<H3>Тестовое сетевое приложение</H3>",ContentMode.HTML);
+        Label mainLabel=new Label("Тестовое сетевое приложение");
+        mainLabel.addStyleName("greytext");
 
         //Получаем информацию о клиенте
         WebBrowser webBrowser = Page.getCurrent().getWebBrowser();
@@ -59,7 +60,7 @@ public class DashboardUI extends UI {
 
         final HorizontalLayout buttonHorizontalLayout=new HorizontalLayout();
         buttonHorizontalLayout.addComponent(dateLabel); buttonHorizontalLayout.setComponentAlignment(dateLabel,Alignment.BOTTOM_LEFT);
-        buttonHorizontalLayout.addComponent(displayLabel); buttonHorizontalLayout.setComponentAlignment(displayLabel,Alignment.BOTTOM_CENTER);
+//        buttonHorizontalLayout.addComponent(displayLabel); buttonHorizontalLayout.setComponentAlignment(displayLabel,Alignment.BOTTOM_CENTER);
         buttonHorizontalLayout.addComponent(ipLabel); buttonHorizontalLayout.setComponentAlignment(ipLabel,Alignment.BOTTOM_RIGHT);
 
         /*TOT2018*/
@@ -145,24 +146,23 @@ public class DashboardUI extends UI {
 
 
 
-        //mainHorizontalLayout.setWidth("900px");
-        //mainHorizontalLayout.setHeight("300px");
+
 
         mainHorizontalLayout.addComponent(weatherWindow);
         mainHorizontalLayout.addComponent(currencyWindow);
         mainHorizontalLayout.addComponent(visitorsWindow);
 
 
-        //mainHorizontalLayout.setComponentAlignment(visitorsWindow1,Alignment.TOP_LEFT);
-//        mainHorizontalLayout.addComponent(visitorsWindow);//mainHorizontalLayout.setComponentAlignment(visitorsWindow2,Alignment.TOP_CENTER);
-//        mainHorizontalLayout.addComponent(visitorsWindow);//mainHorizontalLayout.setComponentAlignment(visitorsWindow3,Alignment.TOP_RIGHT);
         Window subWindow=new Window();
+        subWindow.setStyleName("rounded");
         subWindow.setContent(verticalLayout);
-//        subWindow.setHeight("380px");
-//        subWindow.setWidth("940px");
-        subWindow.setPosition(10,10);
+        subWindow.setPosition(browserWeidth/2-940/2,browserHeight-480);
+//        subWindow.setModal(true);
+
+        UI.getCurrent().setStyleName("main");
 
         UI.getCurrent().addWindow(subWindow);
+
         subWindow.setClosable(false);
         subWindow.setResizable(false);
 

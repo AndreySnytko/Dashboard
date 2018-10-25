@@ -1,6 +1,7 @@
 package Dashboard;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Wait implements Info{
 
@@ -8,13 +9,15 @@ public class Wait implements Info{
 
     }
 
-    public ArrayList<String> getComboList(){
+    public List<String> getComboList(){
         return null;
     };
-    public ArrayList<Float> getValues(){
+    public List<Float> getValues(){
         return null;
     };
     public String getName(){
         return "Ждите загрузки данных";
     };
+    public List<String> getLabels(){     return null;   }
+
 }

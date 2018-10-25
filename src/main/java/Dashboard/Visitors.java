@@ -2,6 +2,8 @@ package Dashboard;
 
 import org.apache.commons.configuration.Configuration;
 import java.util.ArrayList;
+import java.util.List;
+
 public class Visitors implements Info{
 
     private static final String NAME ="Счетчик посещений";
@@ -35,12 +37,13 @@ public class Visitors implements Info{
 
     }
 
-    public ArrayList<String> getComboList(){
+    public List<String> getComboList(){
         return null;
     }
+    public List<String> getLabels(){ return null; }
 
-    public ArrayList<Float> getValues() {
-        ArrayList<Float> values=new ArrayList<>();
+    public List<Float> getValues() {
+        List<Float> values=new ArrayList<>();
         values.add(count);
         return values;
     }

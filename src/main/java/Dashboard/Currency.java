@@ -1,8 +1,8 @@
 package Dashboard;
 
 import org.apache.commons.configuration.Configuration;
-
 import java.util.ArrayList;
+import java.util.List;
 
 public class Currency implements Info{
 
@@ -25,6 +25,14 @@ public class Currency implements Info{
     public String getName(){
         return NAME;
     }
+
+    public List<String> getLabels(){
+        List<String> labels=new ArrayList<>();
+        labels.add("USD");
+        labels.add("EUR");
+        return labels;
+    }
+
 
     public void getData(){
         HttpsInterface http = new HttpsInterface(config.getString("currencyURL"));
@@ -53,16 +61,18 @@ public class Currency implements Info{
 
     }
 
-    public ArrayList<String> getComboList(){
-        return null;
-    }
 
-    public ArrayList<Float> getValues() {
-        ArrayList<Float> values=new ArrayList<>();
+
+    public List<Float> getValues() {
+        List<Float> values=new ArrayList<>();
         values.add(usd);
         values.add(eur);
         return values;
     }
+
+    public List<String> getComboList(){
+        return null;
+    };
 
     public String getErrorText() {
         return errorText;

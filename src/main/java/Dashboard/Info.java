@@ -1,9 +1,11 @@
 package Dashboard;
 
-import java.util.ArrayList;
+
+import java.util.List;
 
 public interface Info {
-    ArrayList<String> getComboList();
-    ArrayList<Float> getValues();
+    List<String> getComboList();
+    List<Float> getValues();
+    List<String> getLabels();
     String getName();
 }

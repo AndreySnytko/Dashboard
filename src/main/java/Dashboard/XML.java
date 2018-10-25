@@ -14,6 +14,7 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.List;
 
 public class XML {
     private String str;
@@ -45,8 +46,8 @@ public class XML {
     }
 
 
-    public ArrayList<String> getXmlAttributes(String path, String item) {
-        ArrayList<String> xmlAttributes = new ArrayList<>();
+    public List<String> getXmlAttributes(String path, String item) {
+        List<String> xmlAttributes = new ArrayList<>();
         try {
 
             //Указываем XPath по которому перебирать элементы
@@ -76,7 +77,7 @@ public class XML {
     }
 
     public String getFirstXmlAttribute(String path, String item) {
-        ArrayList<String> xmlAttributes =getXmlAttributes(path,item);
+        List<String> xmlAttributes =getXmlAttributes(path,item);
         if (xmlAttributes.size() > 0) {
             return xmlAttributes.get(0);
         } else {
@@ -84,8 +85,8 @@ public class XML {
         }
     }
 
-    public ArrayList<String> getXmlElements(String path, String item) {
-        ArrayList<String> xmlElements = new ArrayList<>();
+    public List<String> getXmlElements(String path, String item) {
+        List<String> xmlElements = new ArrayList<>();
         try {
             //Указываем XPath по которому перебирать элементы
             XPath xPath = XPathFactory.newInstance().newXPath();
@@ -115,7 +116,7 @@ public class XML {
     }
 
     public String getFirstXmlElement(String path, String item) {
-        ArrayList<String> xmlElements = getXmlElements(path,item);
+        List<String> xmlElements = getXmlElements(path,item);
         if (xmlElements.size() > 0) {
             return xmlElements.get(0);
         } else {

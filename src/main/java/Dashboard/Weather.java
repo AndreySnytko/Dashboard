@@ -2,6 +2,7 @@ package Dashboard;
 
 import org.apache.commons.configuration.Configuration;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Weather implements Info{
 
@@ -34,6 +35,13 @@ public class Weather implements Info{
         return NAME;
     }
 
+    public List<String> getLabels(){
+        List<String> labels=new ArrayList<>();
+        labels.add("Сейчас");
+        labels.add("Завтра");
+        return labels;
+    }
+
     public void getData(String displayCity){
 
         switch(displayCity){
@@ -54,7 +62,7 @@ public class Weather implements Info{
             if(xml.getError()==0){ //Удалось преобразовать в xml
 
                 String tempNow = xml.getFirstXmlElement("/root/current", "temp_c");
-                ArrayList<String> tempTomorrow = xml.getXmlElements("/root/forecast/forecastday", "maxtemp_c");
+                List<String> tempTomorrow = xml.getXmlElements("/root/forecast/forecastday", "maxtemp_c");
 
                 if(xml.getError()==0) { //Атрибуты найдены
                     this.currentTemp = Float.parseFloat(tempNow);
@@ -70,12 +78,12 @@ public class Weather implements Info{
 
 
 
-    public ArrayList<String> getComboList(){
+    public List<String> getComboList(){
         return this.cities;
     }
 
-    public ArrayList<Float> getValues() {
-        ArrayList<Float> values=new ArrayList<>();
+    public List<Float> getValues() {
+        List<Float> values=new ArrayList<>();
         values.add(currentTemp);
         values.add(tomorrowTemp);
         return values;

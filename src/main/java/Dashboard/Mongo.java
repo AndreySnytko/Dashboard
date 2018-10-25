@@ -22,16 +22,9 @@ public class Mongo {
     public Mongo(Configuration config) {
         try {
 
-            // Создаем подключение
             mongoClient = new MongoClient( config.getString("host"), Integer.valueOf(config.getString("port")) );
-
-            // Выбираем БД для дальнейшей работы
             db = mongoClient.getDB(config.getString("dbname"));
-
-            // Входим под созданным логином и паролем
             authenticate = db.authenticate(config.getString("login"), config.getString("password").toCharArray());
-
-            // Выбираем коллекцию/таблицу для дальнейшей работы
             table = db.getCollection(config.getString("table"));
 
         } catch (UnknownHostException e) {

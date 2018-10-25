@@ -58,10 +58,12 @@ public class DashboardUI extends UI {
         //TODO: Обновлять nowDate по нажатию любой кнопки Обновить в subWindows
         Label dateLabel=new Label("Информация по состояни на "+new SimpleDateFormat("dd.MM.YYYY HH:mm:ss",new Locale("ru")).format(nowDate));
 
+
         final HorizontalLayout buttonHorizontalLayout=new HorizontalLayout();
         buttonHorizontalLayout.addComponent(dateLabel); buttonHorizontalLayout.setComponentAlignment(dateLabel,Alignment.BOTTOM_LEFT);
 //        buttonHorizontalLayout.addComponent(displayLabel); buttonHorizontalLayout.setComponentAlignment(displayLabel,Alignment.BOTTOM_CENTER);
         buttonHorizontalLayout.addComponent(ipLabel); buttonHorizontalLayout.setComponentAlignment(ipLabel,Alignment.BOTTOM_RIGHT);
+        buttonHorizontalLayout.addStyleName("smallgreytext");
 
         /*TOT2018*/
 
@@ -73,19 +75,20 @@ public class DashboardUI extends UI {
         //TOT2018 setContent(verticalLayout);
 
         //Если ширина браузера меньше 940 то размещаем вертикально, если отношение сторон высота/ширину>1.5
-        if ((browserWeidth<940)||(Integer.valueOf(browserHeight)>Integer.valueOf(browserWeidth*3/2))){ //TODO: Исправить для safari
-            x=310;
-//            verticalLayout.setWidth("320px");
-            verticalLayout.setWidth(null);
-            verticalLayout.setHeight("940px");
-            final Layout mainHorizontalLayout=new VerticalLayout(); //mainHorizontalLayout.setStyleName("backColorBrown");
-        }else{
-            final Layout mainHorizontalLayout=new HorizontalLayout(); //mainHorizontalLayout.setStyleName("backColorBrown");
-        }//TODO: Если форма окна близка к квадрату, располагать окна по 2 в ряд; отслеживать мобильные устройства, размер окон в % от ширины экрана
+//        if ((browserWeidth<940)||(Integer.valueOf(browserHeight)>Integer.valueOf(browserWeidth*3/2))){ //TODO: Исправить для safari
+//            x=310;
+////            verticalLayout.setWidth("320px");
+//            verticalLayout.setWidth(null);
+//            verticalLayout.setHeight("940px");
+//            final Layout mainHorizontalLayout=new VerticalLayout(); //mainHorizontalLayout.setStyleName("backColorBrown");
+//        }else{
+
+//         final Layout mainHorizontalLayout=new HorizontalLayout(); //mainHorizontalLayout.setStyleName("backColorBrown");
+        //TODO: Если форма окна близка к квадрату, располагать окна по 2 в ряд; отслеживать мобильные устройства, размер окон в % от ширины экрана
 
         final Layout mainHorizontalLayout=new HorizontalLayout(); //mainHorizontalLayout.setStyleName("backColorBrown");
         mainLabel.setHeightUndefined();
-        verticalLayout.addComponent(mainLabel);             verticalLayout.setComponentAlignment(mainLabel,Alignment.TOP_CENTER);
+        verticalLayout.addComponent(mainLabel);             verticalLayout.setComponentAlignment(mainLabel,Alignment.BOTTOM_CENTER);
         verticalLayout.addComponent(mainHorizontalLayout);  verticalLayout.setComponentAlignment(mainHorizontalLayout,Alignment.TOP_CENTER); mainHorizontalLayout.setSizeUndefined();
         verticalLayout.addComponent(buttonHorizontalLayout);verticalLayout.setComponentAlignment(buttonHorizontalLayout,Alignment.BOTTOM_CENTER); verticalLayout.setSizeUndefined();
 
@@ -135,28 +138,17 @@ public class DashboardUI extends UI {
         Layout visitorsWindow = visitorsDashboard.drawWindow();
 
 
-//        Layout visitorsWindow2 = visitorsDashboard.drawWindow();
-//        Layout visitorsWindow3 = visitorsDashboard.drawWindow();
-
-        //Размещаем панель посещений в главном окне
-//        visitorsWindow.setPosition(630-x*2,50+x*2);
-//        UI.getCurrent().addWindow(visitorsWindow);
-//        setContent(visitorsWindow);
-
-
-
-
-
-
-        mainHorizontalLayout.addComponent(weatherWindow);
         mainHorizontalLayout.addComponent(currencyWindow);
         mainHorizontalLayout.addComponent(visitorsWindow);
+        mainHorizontalLayout.addComponent(weatherWindow);
+
 
 
         Window subWindow=new Window();
+        subWindow.setHeight(null);
         subWindow.setStyleName("rounded");
         subWindow.setContent(verticalLayout);
-        subWindow.setPosition(browserWeidth/2-940/2,browserHeight-480);
+        subWindow.setPosition(browserWeidth/2-940/2,browserHeight-580);
 //        subWindow.setModal(true);
 
         UI.getCurrent().setStyleName("main");

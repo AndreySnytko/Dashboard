@@ -26,11 +26,11 @@ public class RoundDashboard extends VerticalLayout {
         verticalLayout.setSpacing(true);// Добавим отступы между компонентами лейаута
 
 
-        Button button = new Button("Обновить"); button.setWidthUndefined();
+        Button button = new Button("Обновить"); button.setWidthUndefined(); //button.setStyleName("setbutton");
         Label label1=new Label();
         Label label2=new Label();
-        TextField textField1 = new TextField(); textField1.setReadOnly(true); textField1.setWidth("60");//TODO:высчитывать размер от количества символов (em?)
-        TextField textField2 = new TextField(); textField2.setReadOnly(true); textField2.setWidth("60");
+        TextField textField1 = new TextField(); textField1.setReadOnly(true); //textField1.setWidth("60");//TODO:высчитывать размер от количества символов (em?)
+        TextField textField2 = new TextField(); textField2.setReadOnly(true); //textField2.setWidth("60");
         textField1.setStyleName("smalltext");
         textField2.setStyleName("smalltext");
 
@@ -50,7 +50,7 @@ public class RoundDashboard extends VerticalLayout {
         //Прорисовываем окна в зависимости от того какой объект получили
         if(object instanceof Weather) { //Погода
 
-            ComboBox boxCities = new ComboBox("", object.getComboList());
+            ComboBox boxCities = new ComboBox("", object.getComboList()); boxCities.setStyleName("combobox");
             boxCities.setValue(object.getComboList().get(0));
             boxCities.setEmptySelectionAllowed(false);
             boxCities.addStyleName("combobox");
@@ -75,19 +75,23 @@ public class RoundDashboard extends VerticalLayout {
 
             //Выпадающий список
             boxCities.setSizeFull();
-            verticalLayout.addComponents(boxCities);
+
 
             //Значения с подписями
             if(((Weather) object).getError()==0){
 
-                label1.setValue("Температура текущая:"); //TODO: Вынести названия в класс Weather
-                label2.setValue("Прогноз на завтра:");
+                label1.setValue("Сейчас"); //TODO: Вынести названия в класс Weather
+                label2.setValue("Завтра");
 
                 textField1.setValue(decimalFormat.format(object.getValues().get(0))+"C");
                 textField2.setValue(decimalFormat.format(object.getValues().get(1))+"C");
 
-                verticalLayout.addComponents(horizontalLayout1);
-                verticalLayout.addComponents(horizontalLayout2);
+                horizontalLayout1.addStyleName("margintop50");
+
+
+                verticalLayout.addComponents(horizontalLayout1);verticalLayout.setComponentAlignment(horizontalLayout1,Alignment.BOTTOM_CENTER);
+                verticalLayout.addComponents(boxCities);verticalLayout.setComponentAlignment(boxCities,Alignment.TOP_CENTER);
+                verticalLayout.addComponents(horizontalLayout2);verticalLayout.setComponentAlignment(horizontalLayout2,Alignment.TOP_CENTER);
 
             }else{
                 label1.setValue("Не могу получить данные");
@@ -100,6 +104,9 @@ public class RoundDashboard extends VerticalLayout {
 
         }else if(object instanceof Currency){ //Курс валют
 
+            textField1.setStyleName("smalltext red");
+            textField2.setStyleName("smalltext blue");
+
             button.addClickListener(e -> {
                 ((Currency) object).getData();
                 textField1.setValue(decimalFormat.format(object.getValues().get(0)));
@@ -108,13 +115,13 @@ public class RoundDashboard extends VerticalLayout {
 
 
             if(((Currency) object).getError()==0) {
-                label1.setValue("USD:"); //TODO: Вынести названия в класс Currency
-                label2.setValue("EUR:");
+                label1.setValue("USD "); //TODO: Вынести названия в класс Currency
+                label2.setValue("EUR ");
                 textField1.setValue(decimalFormat.format(object.getValues().get(0)));
                 textField2.setValue(decimalFormat.format(object.getValues().get(1)));
                 //Значения с подписями
                 //TODO: Вынести игры с расположением в style.css
-                horizontalLayout1.setComponentAlignment(label1, Alignment.MIDDLE_RIGHT);
+                horizontalLayout1.setComponentAlignment(label1, Alignment.MIDDLE_RIGHT);horizontalLayout1.addStyleName("margintop50");
                 horizontalLayout1.setComponentAlignment(textField1, Alignment.MIDDLE_LEFT);
                 horizontalLayout2.setComponentAlignment(label2, Alignment.MIDDLE_RIGHT);
                 horizontalLayout2.setComponentAlignment(textField2, Alignment.MIDDLE_LEFT);
@@ -131,6 +138,7 @@ public class RoundDashboard extends VerticalLayout {
 
             //Кнопка
             verticalLayout.addComponents(button);verticalLayout.setComponentAlignment(button, Alignment.BOTTOM_CENTER);
+
 
         }else if(object instanceof Visitors){ // Счетчик посещений
             float count=object.getValues().get(0);

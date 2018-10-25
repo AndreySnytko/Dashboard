@@ -63,7 +63,7 @@ public class DashboardUI extends UI {
         buttonHorizontalLayout.addComponent(dateLabel); buttonHorizontalLayout.setComponentAlignment(dateLabel,Alignment.BOTTOM_LEFT);
 //        buttonHorizontalLayout.addComponent(displayLabel); buttonHorizontalLayout.setComponentAlignment(displayLabel,Alignment.BOTTOM_CENTER);
         buttonHorizontalLayout.addComponent(ipLabel); buttonHorizontalLayout.setComponentAlignment(ipLabel,Alignment.BOTTOM_RIGHT);
-        buttonHorizontalLayout.addStyleName("smallgreytext");
+        buttonHorizontalLayout.addStyleName("description");
 
         /*TOT2018*/
 

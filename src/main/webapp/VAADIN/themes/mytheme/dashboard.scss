@@ -15262,11 +15262,17 @@ div.v-layout.v-horizontal.v-widget {
     text-shadow: 1px 1px 2px greenyellow;
 }
 
+.mytheme .description{
+    font-size: 12pt;
+    color:#eeeee0;
+    text-shadow: 1px 1px 2px rgba(238, 238, 224,0.5);
+}
 .mytheme .smalltext {
     font-size: 14pt;
     color: greenyellow;
-    width: 180px;
-    height: 30px;
+    text-align:-moz-right;
+    width: 80px;
+    height: 28px;
     background: #1e1e1e;
     border-color: #1e1e1e;
     border-radius: 5px;
@@ -15276,6 +15282,18 @@ div.v-layout.v-horizontal.v-widget {
     text-shadow: 1px 1px 2px greenyellow;
     box-shadow: inset 0px 0px 10px #23262B; /* Параметры тени */
 }
+
+.mytheme .red {
+    color: red;
+    text-shadow: 1px 1px 2px red;
+}
+
+.mytheme .blue {
+    color: #00BFFF;
+    text-shadow: 1px 1px 2px #00BFFF;
+}
+
+
 
 .mytheme .greytext {
     font-size: 26px;
@@ -15308,13 +15326,15 @@ div.v-layout.v-horizontal.v-widget {
     padding: 10px;
 
     border-radius: 10px;
-
+    text-align:right;
+    text-align:-moz-right;
 
     /*border-color: #00AA00;*/
     /*border: #43464B 1px solid;*/
 
 
-    box-shadow: inset 0 0 20px rgba(67, 70, 75, 0.4); /* Параметры тени */
+    box-shadow: inset 0 0 20px rgba(67, 70, 75, 0.4); /*Серая тень*/
+    /*box-shadow: inset 0 0 5px rgba(173,255,47,0.3); !* Зелёная тень *!*/
 
 
     -moz-border-radius: 10px;
@@ -15339,4 +15359,80 @@ div.v-layout.v-horizontal.v-widget {
     -webkit-repeating-radial-gradient( 50% 50%, 100% 100%, hsla(0,0%,100%,0) 0%, hsla(0,0%,100%,0) 1.2%, hsla(0,0%,100%,.2) 2.2%),
 
     -webkit-radial-gradient( 50% 50%, 200% 50%, hsla(0,0%,90%,1) 5%, hsla(0,0%,85%,1) 30%, hsla(0,0%,60%,1) 100%);
+}
+
+
+/*Хромированый ободок*/
+#a {
+    width:10.0em;
+    height:10.0em;
+    position:relative;
+    border-radius:5.0em;
+    background:#ccc;/*ccc*/
+    box-shadow:
+            inset 0.05em -0.05em 0 #333, /*ccc*/
+            inset 0.17em -0.17em 0 #555,
+            inset -0.03em -0.04em 0 #333, /*999*/
+            inset -0.03em 0.02em 0 #333, /*ccc*/
+            inset -0.1em -0.1em 0 #555,
+            0.1em 0.3em 0.2em rgba(0,0,0,0.3);
+}
+#b {
+    width:9.4em;
+    height:9.4em;
+    top:0.3em;
+    left:0.3em;
+    position:relative;
+    border-radius:4.7em;
+    background:#fff;
+    box-shadow:
+            inset 0.04em 0 0 #fff,
+            inset 0 -0.06em 0 #ddd,
+            inset 0.16em -0.08em 0 #222,
+            inset -0.16em 0.08em 0 #222,
+            inset 0.2em 0.2em 0 #222,
+            0.06em -0.03em 0 #999,
+            -0.1em 0.1em 0 #777,
+            -0.13em -0.2em 0 #fff,
+            0.13em 0.2em 0 #222,
+            0.13em 0.3em 0 #333; /*ccc*/
+}
+#c {
+    width:8.9em;
+    height:8.9em;
+    top:0.25em;
+    left:0.25em;
+    position:relative;
+    border-radius:4.45em;
+    background:#eed;/*f4f5f6;*/
+    box-shadow:
+            inset 0.15em 0.2em 0.05em rgba(0,0,0,0.4),
+            inset 0.2em 0.4em 0.2em rgba(0,0,0,0.3),
+            inset 0 0.05em 0.3em rgba(0,0,0,0.1),
+            -0.16em 0.08em 0 #444,
+            0.16em -0.08em 0 #444;
+}
+.margintop50{
+    margin-top:50px;
+}
+
+
+.buttongrey{
+    color: #fff;
+    background-color: #13161B;;
+    border: 1px solid #4455aa;
+    text-shadow:2px 2px 0px #474746;
+    height: 50px;
+    font-family:Trebuchet MS;
+    font-weight: bold;
+
+    background: #13161B;
+    font-size: 12pt;
+    color:#00BFFF;
+    text-shadow: 0px 0px 3px rgba(238, 238, 224,0.5);
+
+    .v-button-toplink .v-button-caption {
+        color: red;
+        text-decoration: none;
+    }
 }

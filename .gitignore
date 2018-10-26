@@ -1,8 +1,8 @@
 .idea/*
 *.iws
 *.iml
-/out/
+out/
 target/
-README.md
+tmp/
 
 

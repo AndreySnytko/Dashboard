@@ -15388,3 +15388,8 @@ div.v-layout.v-horizontal.v-widget {
 .combogrey .v-filterselect-item-inactive {
 
 }
+
+.error{
+	margin-top:150px;
+	color:red;
+}

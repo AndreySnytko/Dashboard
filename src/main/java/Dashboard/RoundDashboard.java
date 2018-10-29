@@ -81,8 +81,9 @@ public class RoundDashboard extends VerticalLayout {
                 verticalLayout.addComponents(horizontalLayout2);verticalLayout.setComponentAlignment(horizontalLayout2,Alignment.TOP_CENTER);
 
             }else{
-                label1.setValue("Не могу получить данные");
-                verticalLayout.addComponents(label1);verticalLayout.addStyleName("margintop50");
+
+                verticalLayout.addComponents(label1);
+                label1.setValue("Не могу получить данные");label1.setStyleName("error");
                 verticalLayout.setComponentAlignment(label1, Alignment.MIDDLE_CENTER);
             }
 
@@ -120,7 +121,7 @@ public class RoundDashboard extends VerticalLayout {
                 verticalLayout.addComponents(horizontalLayout2);verticalLayout.setComponentAlignment(horizontalLayout2, Alignment.BOTTOM_CENTER);
             }else{
                 label1.setValue(((Currency) object).getErrorText());
-                verticalLayout.addComponents(label1);
+                verticalLayout.addComponents(label1);label1.setStyleName("error");
                 verticalLayout.setComponentAlignment(label1, Alignment.MIDDLE_CENTER);
             }
 
@@ -137,7 +138,7 @@ public class RoundDashboard extends VerticalLayout {
                 verticalLayout.addComponents(label);
                 verticalLayout.setComponentAlignment(label, Alignment.BOTTOM_CENTER);
             }else{
-                label1.setValue("Не могу получить данные");
+                label1.setValue("Не могу получить данные"); label1.setStyleName("error");
                 verticalLayout.addComponents(label1);
                 verticalLayout.setComponentAlignment(label1, Alignment.MIDDLE_CENTER);
             }

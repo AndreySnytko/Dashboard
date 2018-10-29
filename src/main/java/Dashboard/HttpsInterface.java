@@ -68,21 +68,25 @@ public class HttpsInterface
         {
             errorText="Не смог получить данные (SocketTimeoutException) по urlу: "+url;
             error=1;
+            logger.error(errorText);
             logger.debug(errorText,se);
         }
         catch (MalformedURLException me)
         {
             errorText="Не смог получить данные (MalformedURLException) по urlу: "+url;
             error=2;
+            logger.error(errorText);
             logger.debug(errorText,me);
         }
         catch (Exception e)
         {
             errorText="Не смог получить данные (Прочие ошибки) по urlу: "+url;
             error=3;
+            logger.error(errorText);
             logger.debug(errorText,e);
 
-        }finally {
+        }
+        finally {
             logger.info(errorText);
         }
 

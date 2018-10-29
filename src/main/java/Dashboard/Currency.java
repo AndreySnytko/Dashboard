@@ -10,7 +10,7 @@ public class Currency implements Info{
     private float usd;
     private float eur;
 
-    private String errorText="Не смог получить данные с сервера";
+    private String errorText="";
     private int error=1;
 
     private Configuration config;
@@ -37,6 +37,7 @@ public class Currency implements Info{
     public void getData(){
         HttpsInterface http = new HttpsInterface(config.getString("currencyURL"));
         String strXml=http.sendRequest();
+        errorText="Не могу получить данные";
         if(http.getError()==0) {   //Если данные с сервера получили
 
             XML xml = new XML(strXml);
@@ -50,9 +51,11 @@ public class Currency implements Info{
                         this.usd = Float.parseFloat(usd.replace(',', '.'));
                         this.eur = Float.parseFloat(eur.replace(',', '.'));
                         error=0;
+                        errorText="";
                     } catch (NumberFormatException e) {
                         this.usd = (float) 0.0;
                         this.eur = (float) 0.0;
+
                     }
                 }
             }

@@ -9,6 +9,7 @@ public class Visitors implements Info{
     private static final String NAME ="Счетчик посещений";
     private float count;
     private Configuration config;
+    private String errorText="";
 
     public Visitors() {
       this.count=1;

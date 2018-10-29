@@ -9,11 +9,11 @@ public class Weather implements Info{
     private static final String NAME ="Погода";
     private String city;
     private String displayCity;
-    private ArrayList<String> cities;//TODO: Переделать на enum
+    private ArrayList<String> cities;
     private float currentTemp=0;
     private float tomorrowTemp=0;
 
-    private String errorText="Не смог получить данные с сервера";
+    private String errorText="Не могу получить данные";
     private int error=1;
 
     private Configuration config;
@@ -67,6 +67,7 @@ public class Weather implements Info{
                 if(xml.getError()==0) { //Атрибуты найдены
                     this.currentTemp = Float.parseFloat(tempNow);
                     this.tomorrowTemp = Float.parseFloat(tempTomorrow.get(1));//У нас прогноз на 2 дня, 2й день это следующий за текущим, поэтому берём 2е значение.
+                    errorText="";
                     error=0;
                 }
             }

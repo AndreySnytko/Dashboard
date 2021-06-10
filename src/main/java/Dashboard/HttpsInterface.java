@@ -23,6 +23,7 @@ public class HttpsInterface
     public HttpsInterface(String url)
     {
         //TODO: Добавить проверку на корректность url
+        System.out.println("URL"+url);
         this.url=url;
     }
 

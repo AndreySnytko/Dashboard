@@ -57,6 +57,7 @@ public class RoundDashboard extends VerticalLayout {
             //В случае изменения значения comboBox
             boxCities.addValueChangeListener(event -> {
                 String city=boxCities.getValue().toString();
+
                 ((Weather) object).getData(city);
                 textField1.setValue(decimalFormat.format(object.getValues().get(0))+"C");
                 textField2.setValue(decimalFormat.format(object.getValues().get(1))+"C");
